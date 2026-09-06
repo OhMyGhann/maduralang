@@ -5,8 +5,12 @@ export {
   getKabupaten,
   daftarKecamatan,
   getKecamatan,
+  daftarDesa,
+  getDesa,
+  cariDesa,
   cariWilayah,
   daftarPulau,
   cekKodePos,
-  ringkasanStatistik
+  ringkasanStatistik,
+  SEMUA_DESA_MADURA
 } from './wilayah/index.js';

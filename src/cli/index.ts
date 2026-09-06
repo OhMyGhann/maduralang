@@ -93,8 +93,9 @@ export function createCli(): Command {
           console.log(chalk.white(`Provinsi       : ${stats.provinsi}`));
           console.log(chalk.white(`Total Kabupaten: ${chalk.yellow.bold(stats.totalKabupaten)} (Bangkalan, Sampang, Pamekasan, Sumenep)`));
           console.log(chalk.white(`Total Kecamatan: ${chalk.yellow.bold(stats.totalKecamatan)} Kecamatan`));
+          console.log(chalk.white(`Total Desa/Kel : ${chalk.yellow.bold(stats.totalDesaResmi)} Desa/Kelurahan Resmi Kemendagri`));
           console.log(chalk.white(`Total Luas     : ${stats.totalLuasKm2} km²`));
-          console.log(chalk.gray('Gunakan: madura wilayah <nama_kecamatan / kode_pos / kabupaten>\n'));
+          console.log(chalk.gray('Gunakan: madura wilayah <nama_desa / kecamatan / kode_pos / kabupaten>\n'));
 
           console.log(chalk.cyan.bold('DAFTAR KABUPATEN:'));
           for (const kab of daftarKabupaten()) {

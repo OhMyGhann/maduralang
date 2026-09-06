@@ -5,13 +5,16 @@ import {
   KecamatanData,
   PulauData
 } from './data.js';
+import { SEMUA_DESA_MADURA, DesaData } from './desa.js';
 
 export {
   KABUPATEN_MADURA,
   PULAU_MADURA,
+  SEMUA_DESA_MADURA,
   KabupatenData,
   KecamatanData,
-  PulauData
+  PulauData,
+  DesaData
 };
 
 /**
@@ -70,17 +73,65 @@ export function getKecamatan(namaKecamatan: string): (KecamatanData & { kabupate
   return undefined;
 }
 
+/**
+ * Mengambil daftar desa/kelurahan resmi Kemendagri.
+ * Bisa difilter berdasarkan kecamatan dan/atau kabupaten.
+ */
+export function daftarDesa(namaKecamatan?: string, namaKabupaten?: string): DesaData[] {
+  let list = SEMUA_DESA_MADURA;
+
+  if (namaKabupaten) {
+    const cleanKab = namaKabupaten.toLowerCase().replace(/^kabupaten\s+/i, '').trim();
+    list = list.filter(d => d.kabupaten.toLowerCase() === cleanKab);
+  }
+
+  if (namaKecamatan) {
+    const cleanKec = namaKecamatan.toLowerCase().replace(/^kecamatan\s+/i, '').trim();
+    list = list.filter(d => d.kecamatan.toLowerCase() === cleanKec);
+  }
+
+  return list;
+}
+
+/**
+ * Mengambil detail spesifik desa/kelurahan resmi
+ */
+export function getDesa(namaDesa: string, namaKecamatan?: string): DesaData | undefined {
+  if (!namaDesa) return undefined;
+  const cleanDesa = namaDesa.toLowerCase().replace(/^(desa|kelurahan)\s+/i, '').trim();
+
+  if (namaKecamatan) {
+    const cleanKec = namaKecamatan.toLowerCase().replace(/^kecamatan\s+/i, '').trim();
+    return SEMUA_DESA_MADURA.find(
+      d => d.nama.toLowerCase() === cleanDesa && d.kecamatan.toLowerCase() === cleanKec
+    );
+  }
+
+  return SEMUA_DESA_MADURA.find(d => d.nama.toLowerCase() === cleanDesa);
+}
+
+/**
+ * Mencari desa/kelurahan berdasarkan kata kunci nama desa
+ */
+export function cariDesa(kataKunci: string): DesaData[] {
+  if (!kataKunci || !kataKunci.trim()) return [];
+  const q = kataKunci.toLowerCase().trim();
+  return SEMUA_DESA_MADURA.filter(d => d.nama.toLowerCase().includes(q));
+}
+
 export interface HasilCariWilayah {
-  tipe: 'KABUPATEN' | 'KECAMATAN' | 'PULAU';
+  tipe: 'KABUPATEN' | 'KECAMATAN' | 'DESA' | 'PULAU';
+  id?: string;
   nama: string;
   kabupaten: string;
+  kecamatan?: string;
   kodePos?: string;
   info: string;
   koordinat: { lat: number; lng: number };
 }
 
 /**
- * Pencarian cerdas seputar wilayah Madura (bisa nama kecamatan, pulau, kabupaten, atau kode pos)
+ * Pencarian cerdas seputar wilayah Madura (desa, kecamatan, pulau, kabupaten, atau kode pos)
  */
 export function cariWilayah(kataKunci: string): HasilCariWilayah[] {
   if (!kataKunci || !kataKunci.trim()) return [];
@@ -119,7 +170,25 @@ export function cariWilayah(kataKunci: string): HasilCariWilayah[] {
     }
   }
 
-  // 3. Cek Pulau
+  // 3. Cek Desa (maksimal 15 hasil jika query sangat umum agar tidak overload)
+  let desaCount = 0;
+  for (const desa of SEMUA_DESA_MADURA) {
+    if (desa.nama.toLowerCase().includes(q) || desa.id === q) {
+      hasil.push({
+        tipe: 'DESA',
+        id: desa.id,
+        nama: `Desa/Kel. ${desa.nama}`,
+        kecamatan: desa.kecamatan,
+        kabupaten: desa.kabupaten,
+        info: `Kec. ${desa.kecamatan}, Kab. ${desa.kabupaten} (Kode Kemendagri: ${desa.id})`,
+        koordinat: { lat: desa.lat, lng: desa.lng }
+      });
+      desaCount++;
+      if (desaCount >= 15) break;
+    }
+  }
+
+  // 4. Cek Pulau
   for (const pulau of PULAU_MADURA) {
     if (pulau.nama.toLowerCase().includes(q) || pulau.keistimewaan.toLowerCase().includes(q)) {
       hasil.push({
@@ -163,15 +232,11 @@ export function cekKodePos(kodePos: string): (KecamatanData & { kabupaten: strin
 export function ringkasanStatistik() {
   const totalKabupaten = KABUPATEN_MADURA.length;
   let totalKecamatan = 0;
-  let totalDesa = 0;
   let totalLuasKm2 = 0;
 
   for (const kab of KABUPATEN_MADURA) {
     totalKecamatan += kab.kecamatan.length;
     totalLuasKm2 += kab.luasKm2;
-    for (const kec of kab.kecamatan) {
-      totalDesa += kec.jumlahDesa;
-    }
   }
 
   return {
@@ -179,7 +244,7 @@ export function ringkasanStatistik() {
     pulau: 'Madura',
     totalKabupaten,
     totalKecamatan,
-    estimasiTotalDesa: totalDesa,
+    totalDesaResmi: SEMUA_DESA_MADURA.length,
     totalLuasKm2: Number(totalLuasKm2.toFixed(2)),
     kabupatenTerluas: 'Sumenep (2.093 km²)',
     kabupatenPusatBudaya: 'Pamekasan (Bumi Gerbang Salam & Sakera)'

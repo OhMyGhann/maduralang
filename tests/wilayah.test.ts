@@ -4,10 +4,14 @@ import {
   getKabupaten,
   daftarKecamatan,
   getKecamatan,
+  daftarDesa,
+  getDesa,
+  cariDesa,
   cariWilayah,
   daftarPulau,
   cekKodePos,
-  ringkasanStatistik
+  ringkasanStatistik,
+  SEMUA_DESA_MADURA
 } from '../src/stdlib/wilayah/index.js';
 import { compile } from '../src/index.js';
 
@@ -85,6 +89,30 @@ describe('Pustaka Wilayah Madura (madura/wilayah)', () => {
     expect(stats.totalKabupaten).toBe(4);
     expect(stats.totalKecamatan).toBe(72);
     expect(stats.totalLuasKm2).toBeGreaterThan(5000);
+  });
+
+  it('memiliki database resmi 990 desa/kelurahan se-Madura', () => {
+    expect(SEMUA_DESA_MADURA.length).toBe(990);
+
+    const desaPamekasan = daftarDesa(undefined, 'Pamekasan');
+    expect(desaPamekasan.length).toBeGreaterThan(150);
+
+    const desaProppo = daftarDesa('Proppo', 'Pamekasan');
+    expect(desaProppo.length).toBe(27);
+  });
+
+  it('dapat mengambil detail desa spesifik beserta koordinat GPS', () => {
+    const laranganTokol = getDesa('Larangan Tokol', 'Tlanakan');
+    expect(laranganTokol).toBeDefined();
+    expect(laranganTokol?.kabupaten).toBe('Pamekasan');
+    expect(laranganTokol?.lat).toBeLessThan(0);
+    expect(laranganTokol?.lng).toBeGreaterThan(100);
+  });
+
+  it('dapat mencari desa berdasarkan kata kunci', () => {
+    const hasil = cariDesa('Klampar');
+    expect(hasil.length).toBeGreaterThan(0);
+    expect(hasil[0].kecamatan).toBe('Proppo');
   });
 
   it('mentranspile import "madura/wilayah" menjadi subpath yang valid', () => {
