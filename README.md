@@ -53,12 +53,12 @@ antose ambeleData();
 
 ### 1. Jalankan via `npx` (Tanpa Install)
 ```bash
-npx maduralang run program.mdr
+npx @ohmyghann/maduralang run program.mdr
 ```
 
 ### 2. Install Global via `npm`
 ```bash
-npm install -g maduralang
+npm install -g @ohmyghann/maduralang
 ```
 
 ### 3. Perintah CLI
