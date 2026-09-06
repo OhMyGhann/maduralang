@@ -1,0 +1,23 @@
+// ==========================================
+// 09. Switch Case (Pilih, Kadhadhiyan, Bawaan)
+// ==========================================
+
+lakona periksaMenu(hari) {
+  pilih (hari) {
+    kadhadhiyan "Senin":
+      kocaaghi("Menu Senin: Nasi Campur Pamekasan!");
+      ambu;
+    kadhadhiyan "Rabu":
+      kocaaghi("Menu Rabu: Sate Lalat Pamekasan!");
+      ambu;
+    kadhadhiyan "Jumat":
+      kocaaghi("Menu Jumat: Bebek Sinjay Goreng!");
+      ambu;
+    bawaan:
+      kocaaghi(`Menu ${hari}: Rujak Cingur Madura bhei!`);
+  }
+}
+
+periksaMenu("Senin");
+periksaMenu("Jumat");
+periksaMenu("Minggu");

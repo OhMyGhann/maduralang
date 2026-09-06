@@ -28,11 +28,11 @@
       "patterns": [
         {
           "name": "keyword.control.maduralang",
-          "match": "\\b(lamon enja'|lamon|laen|poter|sampek|ambu|terros|jhe_sossa|ngarte|ngamok|totop)\\b"
+          "match": "\\b(lamon enja'|lamon|laen|poter|sampek|ambu|terros|jhe_sossa|ngarte|ngamok|totop|pilih|kadhadhiyan|bawaan|antose)\\b"
         },
         {
           "name": "keyword.declaration.maduralang",
-          "match": "\\b(sango|paggun|lakona|pabali)\\b"
+          "match": "\\b(sango|paggun|lakona|pabali|bhangsa|bhângsa|katoronan|nyiptaaghi|anyar|dibi'|dibi|nyambi|ngala'|ngala|dhari|baghi)\\b"
         },
         {
           "name": "keyword.operator.logical.maduralang",

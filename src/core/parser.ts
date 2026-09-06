@@ -1,4 +1,5 @@
 import { Token, TokenType } from './tokens.js';
+import { Lexer } from './lexer.js';
 import {
   Program,
   Statement,
@@ -15,7 +16,21 @@ import {
   ExpressionStatement,
   BreakStatement,
   ContinueStatement,
-  Identifier
+  Identifier,
+  ClassDeclaration,
+  ClassMethod,
+  ConstructorMethod,
+  SwitchStatement,
+  SwitchCase,
+  ImportDeclaration,
+  ExportDeclaration,
+  ImportSpecifier,
+  ConditionalExpression,
+  TemplateLiteral,
+  ArrowFunctionExpression,
+  NewExpression,
+  ThisExpression,
+  AwaitExpression
 } from './ast.js';
 
 export class Parser {
@@ -44,6 +59,34 @@ export class Parser {
   }
 
   private statement(): Statement {
+    // Modules
+    if (this.match(TokenType.NGALA)) {
+      return this.importDeclaration();
+    }
+    if (this.match(TokenType.BAGHI)) {
+      return this.exportDeclaration();
+    }
+
+    // OOP / Class
+    if (this.match(TokenType.BHANGSA)) {
+      return this.classDeclaration();
+    }
+
+    // Switch
+    if (this.match(TokenType.PILIH)) {
+      return this.switchStatement();
+    }
+
+    // Async function
+    if (this.match(TokenType.NYAMBI)) {
+      if (this.match(TokenType.LAKONA)) {
+        return this.functionDeclaration(true);
+      } else {
+        // backtrack if not function
+        this.current--;
+      }
+    }
+
     if (this.match(TokenType.SANGO)) {
       return this.variableDeclaration('sango');
     }
@@ -51,7 +94,7 @@ export class Parser {
       return this.variableDeclaration('paggun');
     }
     if (this.match(TokenType.LAKONA)) {
-      return this.functionDeclaration();
+      return this.functionDeclaration(false);
     }
     if (this.match(TokenType.LAMON)) {
       return this.ifStatement();
@@ -86,6 +129,173 @@ export class Parser {
     return this.expressionStatement();
   }
 
+  private importDeclaration(): ImportDeclaration {
+    const specifiers: ImportSpecifier[] = [];
+    let defaultSpecifier: string | undefined = undefined;
+
+    if (this.match(TokenType.LBRACE)) {
+      if (!this.check(TokenType.RBRACE)) {
+        do {
+          const name = this.advance().value;
+          specifiers.push({ imported: name, local: name });
+        } while (this.match(TokenType.COMMA));
+      }
+      this.consume(TokenType.RBRACE, "Koddhuna '}' saamponna dhaptar import");
+    } else if (!this.check(TokenType.DHARI)) {
+      defaultSpecifier = this.advance().value;
+    }
+
+    this.consume(TokenType.DHARI, "Koddhuna 'dhari' saamponna dhaptar import");
+    const sourceToken = this.consume(TokenType.STRING, "Koddhuna lokasi modul (string)");
+    this.consumeSemicolon();
+
+    return {
+      type: 'ImportDeclaration',
+      specifiers,
+      defaultSpecifier,
+      source: sourceToken.value
+    };
+  }
+
+  private exportDeclaration(): ExportDeclaration {
+    if (this.match(TokenType.BAWAAN)) {
+      const expr = this.expression();
+      this.consumeSemicolon();
+      return {
+        type: 'ExportDeclaration',
+        isDefault: true,
+        declaration: {
+          type: 'ExpressionStatement',
+          expression: expr
+        }
+      };
+    }
+
+    const decl = this.statement();
+    return {
+      type: 'ExportDeclaration',
+      declaration: decl,
+      isDefault: false
+    };
+  }
+
+  private classDeclaration(): ClassDeclaration {
+    const nameToken = this.consume(TokenType.IDENTIFIER, "Koddhuna nyama bhângsa (kelas)");
+    let superClass: Identifier | undefined = undefined;
+
+    if (this.match(TokenType.KATORONAN)) {
+      const superToken = this.consume(TokenType.IDENTIFIER, "Koddhuna nyama kelas induk saamponna 'katoronan'");
+      superClass = { type: 'Identifier', name: superToken.value };
+    }
+
+    this.consume(TokenType.LBRACE, "Koddhuna '{' neng pamokka' definisi bhângsa");
+
+    let constructorMethod: ConstructorMethod | undefined = undefined;
+    const methods: ClassMethod[] = [];
+
+    while (!this.check(TokenType.RBRACE) && !this.isAtEnd()) {
+      if (this.match(TokenType.SEMICOLON)) continue;
+
+      // Constructor: nyiptaaghi(...) { ... }
+      if (this.match(TokenType.NYIPTAAGHI)) {
+        this.consume(TokenType.LPAREN, "Koddhuna '(' saamponna 'nyiptaaghi'");
+        const params: string[] = [];
+        if (!this.check(TokenType.RPAREN)) {
+          do {
+            params.push(this.consume(TokenType.IDENTIFIER, "Koddhuna nyama parameter").value);
+          } while (this.match(TokenType.COMMA));
+        }
+        this.consume(TokenType.RPAREN, "Koddhuna ')'");
+        const body = this.blockStatement();
+        constructorMethod = { type: 'ConstructorMethod', params, body };
+        continue;
+      }
+
+      // Methods
+      let isAsync = false;
+      if (this.match(TokenType.NYAMBI)) {
+        isAsync = true;
+      }
+      this.match(TokenType.LAKONA);
+
+      const methodName = this.consume(TokenType.IDENTIFIER, "Koddhuna nyama lakona (method) neng dhalem bhângsa");
+      this.consume(TokenType.LPAREN, "Koddhuna '(' saamponna nyama method");
+      const params: string[] = [];
+      if (!this.check(TokenType.RPAREN)) {
+        do {
+          params.push(this.consume(TokenType.IDENTIFIER, "Koddhuna nyama parameter").value);
+        } while (this.match(TokenType.COMMA));
+      }
+      this.consume(TokenType.RPAREN, "Koddhuna ')'");
+      const body = this.blockStatement();
+      methods.push({
+        type: 'ClassMethod',
+        name: methodName.value,
+        params,
+        body,
+        isAsync
+      });
+    }
+
+    this.consume(TokenType.RBRACE, "Koddhuna '}' neng panotop bhângsa");
+
+    return {
+      type: 'ClassDeclaration',
+      name: nameToken.value,
+      superClass,
+      constructorMethod,
+      methods
+    };
+  }
+
+  private switchStatement(): SwitchStatement {
+    this.consume(TokenType.LPAREN, "Koddhuna '(' saamponna 'pilih'");
+    const discriminant = this.expression();
+    this.consume(TokenType.RPAREN, "Koddhuna ')' saamponna kondisi 'pilih'");
+
+    this.consume(TokenType.LBRACE, "Koddhuna '{' neng pamokka' blok 'pilih'");
+    const cases: SwitchCase[] = [];
+
+    while (!this.check(TokenType.RBRACE) && !this.isAtEnd()) {
+      if (this.match(TokenType.KADHADHIYAN)) {
+        const test = this.expression();
+        this.consume(TokenType.COLON, "Koddhuna ':' saamponna nilai 'kadhadhiyan'");
+        const consequent: Statement[] = [];
+        while (
+          !this.check(TokenType.KADHADHIYAN) &&
+          !this.check(TokenType.BAWAAN) &&
+          !this.check(TokenType.RBRACE) &&
+          !this.isAtEnd()
+        ) {
+          consequent.push(this.statement());
+        }
+        cases.push({ type: 'SwitchCase', test, consequent });
+      } else if (this.match(TokenType.BAWAAN)) {
+        this.consume(TokenType.COLON, "Koddhuna ':' saamponna 'bawaan'");
+        const consequent: Statement[] = [];
+        while (
+          !this.check(TokenType.KADHADHIYAN) &&
+          !this.check(TokenType.BAWAAN) &&
+          !this.check(TokenType.RBRACE) &&
+          !this.isAtEnd()
+        ) {
+          consequent.push(this.statement());
+        }
+        cases.push({ type: 'SwitchCase', test: null, consequent });
+      } else {
+        throw new Error(`[MaduraLang Sala] Koddhuna 'kadhadhiyan' otaba 'bawaan' neng dhalem 'pilih' (baris ${this.peek().line})`);
+      }
+    }
+
+    this.consume(TokenType.RBRACE, "Koddhuna '}' neng panotop blok 'pilih'");
+
+    return {
+      type: 'SwitchStatement',
+      discriminant,
+      cases
+    };
+  }
+
   private variableDeclaration(kind: 'sango' | 'paggun'): VariableDeclaration {
     const nameToken = this.consume(TokenType.IDENTIFIER, `Koddhuna nyama variabel saamponna '${kind}'`);
     let init: Expression | undefined = undefined;
@@ -106,7 +316,7 @@ export class Parser {
     };
   }
 
-  private functionDeclaration(): FunctionDeclaration {
+  private functionDeclaration(isAsync: boolean = false): FunctionDeclaration {
     const nameToken = this.consume(TokenType.IDENTIFIER, "Koddhuna nyama lakona (fungsi) saamponna 'lakona'");
     this.consume(TokenType.LPAREN, "Koddhuna '(' saamponna nyama lakona");
 
@@ -126,6 +336,7 @@ export class Parser {
       name: nameToken.value,
       params,
       body,
+      isAsync,
       line: nameToken.line,
       column: nameToken.column
     };
@@ -288,7 +499,7 @@ export class Parser {
   }
 
   private assignment(): Expression {
-    const expr = this.logicalOr();
+    const expr = this.ternary();
 
     if (
       this.match(TokenType.ASSIGN) ||
@@ -303,6 +514,25 @@ export class Parser {
         operator,
         left: expr,
         right: value
+      };
+    }
+
+    return expr;
+  }
+
+  private ternary(): Expression {
+    const expr = this.logicalOr();
+
+    if (this.match(TokenType.QUESTION)) {
+      const consequent = this.expression();
+      this.consume(TokenType.COLON, "Koddhuna ':' neng dhalem ekspresi ternary");
+      const alternate = this.expression();
+
+      return {
+        type: 'ConditionalExpression',
+        test: expr,
+        consequent,
+        alternate
       };
     }
 
@@ -426,6 +656,13 @@ export class Parser {
   }
 
   private unary(): Expression {
+    if (this.match(TokenType.ANTOSE)) {
+      return {
+        type: 'AwaitExpression',
+        argument: this.unary()
+      };
+    }
+
     if (this.match(TokenType.BENNE)) {
       return {
         type: 'UnaryExpression',
@@ -529,6 +766,35 @@ export class Parser {
   }
 
   private primary(): Expression {
+    // OOP 'anyar' (new)
+    if (this.match(TokenType.ANYAR)) {
+      const callee = this.callOrMember();
+      if (callee.type === 'CallExpression') {
+        return {
+          type: 'NewExpression',
+          callee: callee.callee,
+          arguments: callee.arguments
+        };
+      }
+      return {
+        type: 'NewExpression',
+        callee,
+        arguments: []
+      };
+    }
+
+    // OOP 'dibi'' (this)
+    if (this.match(TokenType.DIBI)) {
+      return {
+        type: 'ThisExpression'
+      };
+    }
+
+    // Async arrow function: nyambi (...) => ... or nyambi x => ...
+    if (this.match(TokenType.NYAMBI)) {
+      return this.arrowFunction(true);
+    }
+
     if (this.match(TokenType.NUMBER)) {
       return {
         type: 'NumberLiteral',
@@ -541,6 +807,10 @@ export class Parser {
         type: 'StringLiteral',
         value: this.previous().value
       };
+    }
+
+    if (this.match(TokenType.TEMPLATE_STRING)) {
+      return this.parseTemplateString(this.previous().value);
     }
 
     if (this.match(TokenType.BHENDER)) {
@@ -585,9 +855,20 @@ export class Parser {
     }
 
     if (this.match(TokenType.IDENTIFIER)) {
+      const idName = this.previous().value;
+      // Check single-param arrow function: x => ...
+      if (this.match(TokenType.ARROW)) {
+        const body = this.check(TokenType.LBRACE) ? this.blockStatement() : this.expression();
+        return {
+          type: 'ArrowFunctionExpression',
+          params: [idName],
+          body,
+          isAsync: false
+        };
+      }
       return {
         type: 'Identifier',
-        name: this.previous().value
+        name: idName
       };
     }
 
@@ -629,8 +910,12 @@ export class Parser {
       };
     }
 
-    // Grouping (expr)
-    if (this.match(TokenType.LPAREN)) {
+    // Grouping (expr) OR Arrow Function (a, b) => ...
+    if (this.check(TokenType.LPAREN)) {
+      if (this.isArrowFunctionAhead()) {
+        return this.arrowFunction(false);
+      }
+      this.advance(); // consume '('
       const expr = this.expression();
       this.consume(TokenType.RPAREN, "Koddhuna ')' saamponna ekspresi neng dhalem kurung");
       return expr;
@@ -640,6 +925,100 @@ export class Parser {
     throw new Error(
       `[MaduraLang Sala] Sintaks ta' e-kennal '${token.value || token.type}' neng baris ${token.line}, kolom ${token.column}`
     );
+  }
+
+  private isArrowFunctionAhead(): boolean {
+    if (this.peek().type !== TokenType.LPAREN) return false;
+    let i = this.current + 1; // mulai setelah '('
+
+    // Check empty params: () =>
+    if (this.tokens[i]?.type === TokenType.RPAREN && this.tokens[i + 1]?.type === TokenType.ARROW) {
+      return true;
+    }
+
+    // Check param list: id, id, ... ) =>
+    while (i < this.tokens.length && this.tokens[i].type !== TokenType.RPAREN && this.tokens[i].type !== TokenType.EOF) {
+      if (this.tokens[i].type !== TokenType.IDENTIFIER && this.tokens[i].type !== TokenType.COMMA) {
+        return false;
+      }
+      i++;
+    }
+
+    if (this.tokens[i]?.type === TokenType.RPAREN && this.tokens[i + 1]?.type === TokenType.ARROW) {
+      return true;
+    }
+
+    return false;
+  }
+
+  private arrowFunction(isAsync: boolean): ArrowFunctionExpression {
+    const params: string[] = [];
+
+    if (this.match(TokenType.LPAREN)) {
+      if (!this.check(TokenType.RPAREN)) {
+        do {
+          params.push(this.consume(TokenType.IDENTIFIER, "Koddhuna parameter arrow function").value);
+        } while (this.match(TokenType.COMMA));
+      }
+      this.consume(TokenType.RPAREN, "Koddhuna ')'");
+    } else if (this.match(TokenType.IDENTIFIER)) {
+      params.push(this.previous().value);
+    }
+
+    this.consume(TokenType.ARROW, "Koddhuna '=>' neng arrow function");
+
+    let body: BlockStatement | Expression;
+    if (this.check(TokenType.LBRACE)) {
+      body = this.blockStatement();
+    } else {
+      body = this.expression();
+    }
+
+    return {
+      type: 'ArrowFunctionExpression',
+      params,
+      body,
+      isAsync
+    };
+  }
+
+  private parseTemplateString(raw: string): TemplateLiteral {
+    const quasis: string[] = [];
+    const expressions: Expression[] = [];
+    let currentQuasi = '';
+    let i = 0;
+
+    while (i < raw.length) {
+      if (raw[i] === '$' && raw[i + 1] === '{') {
+        quasis.push(currentQuasi);
+        currentQuasi = '';
+        i += 2; // skip ${
+
+        let braceCount = 1;
+        let exprStr = '';
+        while (i < raw.length && braceCount > 0) {
+          if (raw[i] === '{') braceCount++;
+          else if (raw[i] === '}') braceCount--;
+          if (braceCount > 0) exprStr += raw[i];
+          i++;
+        }
+
+        const subLexer = new Lexer(exprStr);
+        const subTokens = subLexer.tokenize();
+        const subParser = new Parser(subTokens);
+        expressions.push(subParser.expression());
+      } else {
+        currentQuasi += raw[i];
+        i++;
+      }
+    }
+    quasis.push(currentQuasi);
+
+    return {
+      type: 'TemplateLiteral',
+      quasis,
+      expressions
+    };
   }
 
   // --- Helper Methods ---

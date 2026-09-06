@@ -12,11 +12,24 @@ export type NodeType =
   | 'ReturnStatement'
   | 'TryCatchStatement'
   | 'ThrowStatement'
+  | 'ClassDeclaration'
+  | 'ClassMethod'
+  | 'ConstructorMethod'
+  | 'SwitchStatement'
+  | 'SwitchCase'
+  | 'ImportDeclaration'
+  | 'ExportDeclaration'
   | 'BinaryExpression'
   | 'UnaryExpression'
   | 'UpdateExpression'
   | 'AssignmentExpression'
   | 'CallExpression'
+  | 'NewExpression'
+  | 'ThisExpression'
+  | 'AwaitExpression'
+  | 'ArrowFunctionExpression'
+  | 'ConditionalExpression'
+  | 'TemplateLiteral'
   | 'MemberExpression'
   | 'ArrayLiteral'
   | 'ObjectLiteral'
@@ -50,7 +63,11 @@ export type Statement =
   | FunctionDeclaration
   | ReturnStatement
   | TryCatchStatement
-  | ThrowStatement;
+  | ThrowStatement
+  | ClassDeclaration
+  | SwitchStatement
+  | ImportDeclaration
+  | ExportDeclaration;
 
 export interface VariableDeclaration extends ASTNode {
   type: 'VariableDeclaration';
@@ -73,7 +90,7 @@ export interface IfStatement extends ASTNode {
   type: 'IfStatement';
   test: Expression;
   consequent: Statement;
-  alternate?: Statement; // Bisa berupa IfStatement berikutnya (lamon enja') atau BlockStatement (laen)
+  alternate?: Statement;
 }
 
 export interface ForStatement extends ASTNode {
@@ -103,6 +120,7 @@ export interface FunctionDeclaration extends ASTNode {
   name: string;
   params: string[];
   body: BlockStatement;
+  isAsync?: boolean;
 }
 
 export interface ReturnStatement extends ASTNode {
@@ -125,12 +143,73 @@ export interface ThrowStatement extends ASTNode {
   argument: Expression;
 }
 
+// OOP / Class AST
+export interface ConstructorMethod extends ASTNode {
+  type: 'ConstructorMethod';
+  params: string[];
+  body: BlockStatement;
+}
+
+export interface ClassMethod extends ASTNode {
+  type: 'ClassMethod';
+  name: string;
+  params: string[];
+  body: BlockStatement;
+  isAsync?: boolean;
+}
+
+export interface ClassDeclaration extends ASTNode {
+  type: 'ClassDeclaration';
+  name: string;
+  superClass?: Identifier;
+  constructorMethod?: ConstructorMethod;
+  methods: ClassMethod[];
+}
+
+// Switch / Case
+export interface SwitchCase extends ASTNode {
+  type: 'SwitchCase';
+  test?: Expression | null; // null for 'bawaan' (default)
+  consequent: Statement[];
+}
+
+export interface SwitchStatement extends ASTNode {
+  type: 'SwitchStatement';
+  discriminant: Expression;
+  cases: SwitchCase[];
+}
+
+// Modules
+export interface ImportSpecifier {
+  imported: string;
+  local: string;
+}
+
+export interface ImportDeclaration extends ASTNode {
+  type: 'ImportDeclaration';
+  specifiers: ImportSpecifier[];
+  defaultSpecifier?: string;
+  source: string;
+}
+
+export interface ExportDeclaration extends ASTNode {
+  type: 'ExportDeclaration';
+  declaration?: Statement;
+  isDefault?: boolean;
+}
+
 export type Expression =
   | BinaryExpression
   | UnaryExpression
   | UpdateExpression
   | AssignmentExpression
   | CallExpression
+  | NewExpression
+  | ThisExpression
+  | AwaitExpression
+  | ArrowFunctionExpression
+  | ConditionalExpression
+  | TemplateLiteral
   | MemberExpression
   | ArrayLiteral
   | ObjectLiteral
@@ -175,11 +254,50 @@ export interface CallExpression extends ASTNode {
   arguments: Expression[];
 }
 
+export interface NewExpression extends ASTNode {
+  type: 'NewExpression';
+  callee: Expression;
+  arguments: Expression[];
+}
+
+export interface ThisExpression extends ASTNode {
+  type: 'ThisExpression';
+}
+
+export interface AwaitExpression extends ASTNode {
+  type: 'AwaitExpression';
+  argument: Expression;
+}
+
+export interface ArrowFunctionExpression extends ASTNode {
+  type: 'ArrowFunctionExpression';
+  params: string[];
+  body: BlockStatement | Expression;
+  isAsync?: boolean;
+}
+
+export interface ConditionalExpression extends ASTNode {
+  type: 'ConditionalExpression';
+  test: Expression;
+  consequent: Expression;
+  alternate: Expression;
+}
+
+export interface TemplateElement {
+  raw: string;
+}
+
+export interface TemplateLiteral extends ASTNode {
+  type: 'TemplateLiteral';
+  quasis: string[];
+  expressions: Expression[];
+}
+
 export interface MemberExpression extends ASTNode {
   type: 'MemberExpression';
   object: Expression;
   property: Expression;
-  computed: boolean; // true if obj[prop], false if obj.prop
+  computed: boolean;
 }
 
 export interface ArrayLiteral extends ASTNode {

@@ -296,6 +296,10 @@
         <option value="03">03. Perulangan (Poter & Sampek)</option>
         <option value="04">04. Lakona (Fungsi & Array)</option>
         <option value="05">05. Jhe' Sossa (Error Handling)</option>
+        <option value="06">06. Bhângsa & OOP (Class & Anyar)</option>
+        <option value="07">07. Nyambi & Antose (Async Await)</option>
+        <option value="08">08. Arrow Function & Template String</option>
+        <option value="09">09. Pilih & Kadhadhiyan (Switch Case)</option>
       </select>
 
       <button id="runBtn" class="btn-run">
@@ -431,7 +435,80 @@ jhe_sossa {
   kocaaghi("Waduh bada masalah e-tangkep: " + err);
 } totop {
   kocaaghi("Totop: Proses pembagian marè!");
-}`
+}`,
+
+      '06': `// 06. OOP & Class
+bhangsa Pendekar {
+  nyiptaaghi(nyama, senjata) {
+    dibi'.nyama = nyama;
+    dibi'.senjata = senjata;
+  }
+
+  serang() {
+    kocaaghi(\`\${dibi'.nyama} nyerang ngangghuy \${dibi'.senjata}!\`);
+  }
+}
+
+bhangsa Jawara katoronan Pendekar {
+  nyiptaaghi(nyama, senjata, pangkat) {
+    dibi'.nyama = nyama;
+    dibi'.senjata = senjata;
+    dibi'.pangkat = pangkat;
+  }
+
+  tampilPangkat() {
+    dibi'.serang();
+    kocaaghi(\`Pangkat: \${dibi'.pangkat} dhari Pamekasan!\`);
+  }
+}
+
+sango p = anyar Jawara("Sakera", "Calok Sakti", "Panglima Utama");
+p.tampilPangkat();`,
+
+      '07': `// 07. Async & Await
+nyambi lakona masakSate(namaMenu) {
+  kocaaghi(\`Molae manggang \${namaMenu}...\`);
+  antose anyar Promise((resolve) => setTimeout(resolve, 600));
+  pabali \`\${namaMenu} ampon masak ban berres e-sajiaghi!\`;
+}
+
+nyambi lakona utama() {
+  kocaaghi("--- Pesanan Maso' ---");
+  sango hasel = antose masakSate("Sate Lalat Pamekasan");
+  kocaaghi("Hasel:", hasel);
+}
+
+antose utama();`,
+
+      '08': `// 08. Arrow Function & Template String
+sango angka = [1, 2, 3, 4, 5, 6];
+sango genap = angka.filter((n) => n % 2 == 0);
+kocaaghi(\`Angka genap: [\${genap.join(", ")}]\`);
+
+sango kuadrat = genap.map((x) => x * x);
+kocaaghi(\`Hasil kuadrat: [\${kuadrat.join(", ")}]\`);
+
+sango skor = 85;
+sango evaluasi = (nilai) => (nilai >= 75) ? "Mumtaz (Lulus)" : "Remidi";
+kocaaghi(\`Status Ujian (\${skor}): \${evaluasi(skor)}\`);`,
+
+      '09': `// 09. Switch Case (Pilih & Kadhadhiyan)
+lakona periksaMenu(hari) {
+  pilih (hari) {
+    kadhadhiyan "Senin":
+      kocaaghi("Menu Senin: Nasi Campur Pamekasan");
+      ambu;
+    kadhadhiyan "Jumat":
+      kocaaghi("Menu Jumat: Bebek Sinjay Goreng");
+      ambu;
+    bawaan:
+      kocaaghi(\`Menu \${hari}: Rujak Cingur Madura\`);
+  }
+}
+
+periksaMenu("Senin");
+periksaMenu("Jumat");
+periksaMenu("Minggu");`
     };
 
     const editor = document.getElementById('editor');
@@ -493,14 +570,12 @@ jhe_sossa {
         };
 
         const runner = new Function('kocaaghi', `
-          try {
+          return (async () => {
             ${js}
-          } catch(e) {
-            throw e;
-          }
+          })();
         `);
 
-        runner(customKocaaghi);
+        await runner(customKocaaghi);
 
         terminal.textContent = outputLogs.join('\n') || '[Program selesai tanpa output]';
         statusBadge.className = 'badge-status success';

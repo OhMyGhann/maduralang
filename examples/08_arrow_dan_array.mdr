@@ -1,0 +1,18 @@
+// ==========================================
+// 08. Arrow Function & Metode Array Modern
+// ==========================================
+
+sango angka = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+// Arrow function ringkas dengan filter
+sango angkaGenap = angka.filter((n) => n % 2 == 0);
+kocaaghi(`Angka genap: [${angkaGenap.join(", ")}]`);
+
+// Arrow function dengan map
+sango angkaKaliDua = angkaGenap.map((n) => n * 2);
+kocaaghi(`Angka genap e-kali 2: [${angkaKaliDua.join(", ")}]`);
+
+// Ternary operator di dalam arrow function
+sango beriLabel = (skor) => (skor >= 75) ? "Lulus Bagus" : "Remidi";
+kocaaghi(`Skor 80: ${beriLabel(80)}`);
+kocaaghi(`Skor 60: ${beriLabel(60)}`);

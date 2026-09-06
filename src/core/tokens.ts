@@ -25,9 +25,31 @@ export enum TokenType {
   OTABA = 'OTABA',                 // otaba (||)
   BENNE = 'BENNE',                 // benne (!)
 
+  // OOP / Class Keywords
+  BHANGSA = 'BHANGSA',             // bhangsa (class)
+  KATORONAN = 'KATORONAN',         // katoronan (extends)
+  NYIPTAAGHI = 'NYIPTAAGHI',       // nyiptaaghi (constructor)
+  ANYAR = 'ANYAR',                 // anyar (new)
+  DIBI = 'DIBI',                   // dibi' / dibi (this)
+
+  // Async / Await
+  NYAMBI = 'NYAMBI',               // nyambi (async)
+  ANTOSE = 'ANTOSE',               // antose (await)
+
+  // Modules (Import / Export)
+  NGALA = 'NGALA',                 // ngala' / ngala (import)
+  DHARI = 'DHARI',                 // dhari (from)
+  BAGHI = 'BAGHI',                 // baghi (export)
+
+  // Switch / Case
+  PILIH = 'PILIH',                 // pilih (switch)
+  KADHADHIYAN = 'KADHADHIYAN',     // kadhadhiyan (case)
+  BAWAAN = 'BAWAAN',               // bawaan (default)
+
   // Literals & Identifiers
   NUMBER = 'NUMBER',
   STRING = 'STRING',
+  TEMPLATE_STRING = 'TEMPLATE_STRING', // `...`
   IDENTIFIER = 'IDENTIFIER',
 
   // Operators
@@ -49,6 +71,9 @@ export enum TokenType {
   GT = 'GT',                       // >
   LTE = 'LTE',                     // <=
   GTE = 'GTE',                     // >=
+  ARROW = 'ARROW',                 // =>
+  QUESTION = 'QUESTION',           // ?
+  SPREAD = 'SPREAD',               // ...
 
   // Delimiters & Punctuation
   LPAREN = 'LPAREN',               // (

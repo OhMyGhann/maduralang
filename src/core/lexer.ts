@@ -133,7 +133,7 @@ export class Lexer {
     this.advance(); // consume closing quote
 
     this.tokens.push({
-      type: TokenType.STRING,
+      type: quote === '`' ? TokenType.TEMPLATE_STRING : TokenType.STRING,
       value: strVal,
       line: startLine,
       column: startCol
@@ -256,6 +256,52 @@ export class Lexer {
       case 'benne':
         this.addToken(TokenType.BENNE, word, startCol);
         break;
+      // OOP
+      case 'bhangsa':
+      case 'bhângsa':
+        this.addToken(TokenType.BHANGSA, word, startCol);
+        break;
+      case 'katoronan':
+        this.addToken(TokenType.KATORONAN, word, startCol);
+        break;
+      case 'nyiptaaghi':
+        this.addToken(TokenType.NYIPTAAGHI, word, startCol);
+        break;
+      case 'anyar':
+        this.addToken(TokenType.ANYAR, word, startCol);
+        break;
+      case "dibi'":
+      case 'dibi':
+        this.addToken(TokenType.DIBI, word, startCol);
+        break;
+      // Async / Await
+      case 'nyambi':
+        this.addToken(TokenType.NYAMBI, word, startCol);
+        break;
+      case 'antose':
+        this.addToken(TokenType.ANTOSE, word, startCol);
+        break;
+      // Modules
+      case "ngala'":
+      case 'ngala':
+        this.addToken(TokenType.NGALA, word, startCol);
+        break;
+      case 'dhari':
+        this.addToken(TokenType.DHARI, word, startCol);
+        break;
+      case 'baghi':
+        this.addToken(TokenType.BAGHI, word, startCol);
+        break;
+      // Switch / Case
+      case 'pilih':
+        this.addToken(TokenType.PILIH, word, startCol);
+        break;
+      case 'kadhadhiyan':
+        this.addToken(TokenType.KADHADHIYAN, word, startCol);
+        break;
+      case 'bawaan':
+        this.addToken(TokenType.BAWAAN, word, startCol);
+        break;
       default:
         // Identifiers can't have trailing apostrophes unless keyword
         const cleanIdent = word.replace(/'/g, '');
@@ -294,10 +340,19 @@ export class Lexer {
         this.addToken(TokenType.COMMA, char, startCol);
         break;
       case '.':
-        this.addToken(TokenType.DOT, char, startCol);
+        if (this.peek() === '.' && this.peekNext() === '.') {
+          this.advance(); // .
+          this.advance(); // .
+          this.addToken(TokenType.SPREAD, '...', startCol);
+        } else {
+          this.addToken(TokenType.DOT, char, startCol);
+        }
         break;
       case ':':
         this.addToken(TokenType.COLON, char, startCol);
+        break;
+      case '?':
+        this.addToken(TokenType.QUESTION, char, startCol);
         break;
 
       case '+':
@@ -325,7 +380,9 @@ export class Lexer {
         break;
 
       case '=':
-        if (this.match('=')) {
+        if (this.match('>')) {
+          this.addToken(TokenType.ARROW, '=>', startCol);
+        } else if (this.match('=')) {
           if (this.match('=')) {
             this.addToken(TokenType.STRICT_EQ, '===', startCol);
           } else {

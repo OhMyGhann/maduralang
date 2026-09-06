@@ -1,0 +1,25 @@
+// ==========================================
+// 07. Asynchronous Programming (Nyambi & Antose)
+// ==========================================
+
+nyambi lakona jedaWaktu(ms) {
+  pabali antose anyar Promise((resolve) => setTimeout(resolve, ms));
+}
+
+nyambi lakona ambeleDataPesanan() {
+  kocaaghi("1. Molae ngala' pesanan sate Pamekasan...");
+  antose jedaWaktu(500);
+
+  kocaaghi("2. Pesanan e-proses neng dapur...");
+  antose jedaWaktu(500);
+
+  sango pesanan = {
+    menu: "Sate Lalat Khas Pamekasan",
+    porsi: 3,
+    status: "Siap e-sajiaghi"
+  };
+
+  kocaaghi(`3. Berres! ${pesanan.menu} sajian ${pesanan.porsi} porsi: ${pesanan.status}!`);
+}
+
+antose ambeleDataPesanan();

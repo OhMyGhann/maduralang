@@ -19,7 +19,17 @@ import {
   CallExpression,
   MemberExpression,
   ArrayLiteral,
-  ObjectLiteral
+  ObjectLiteral,
+  ClassDeclaration,
+  SwitchStatement,
+  ImportDeclaration,
+  ExportDeclaration,
+  ConditionalExpression,
+  TemplateLiteral,
+  ArrowFunctionExpression,
+  NewExpression,
+  ThisExpression,
+  AwaitExpression
 } from './ast.js';
 
 export interface CodeGenOptions {
@@ -83,6 +93,14 @@ export class CodeGenerator {
         return this.generateTryCatchStatement(stmt);
       case 'ThrowStatement':
         return `${this.indent()}throw ${this.generateExpression(stmt.argument)};`;
+      case 'ClassDeclaration':
+        return this.generateClassDeclaration(stmt);
+      case 'SwitchStatement':
+        return this.generateSwitchStatement(stmt);
+      case 'ImportDeclaration':
+        return this.generateImportDeclaration(stmt);
+      case 'ExportDeclaration':
+        return this.generateExportDeclaration(stmt);
       case 'BlockStatement':
         return this.generateBlockStatement(stmt);
       case 'ExpressionStatement':
@@ -101,10 +119,93 @@ export class CodeGenerator {
   }
 
   private generateFunctionDeclaration(stmt: FunctionDeclaration): string {
+    const asyncPrefix = stmt.isAsync ? 'async ' : '';
     const params = stmt.params.join(', ');
-    const header = `${this.indent()}function ${stmt.name}(${params}) `;
+    const header = `${this.indent()}${asyncPrefix}function ${stmt.name}(${params}) `;
     const body = this.generateBlockStatement(stmt.body);
     return `${header}${body.trimStart()}`;
+  }
+
+  private generateClassDeclaration(stmt: ClassDeclaration): string {
+    const extendsClause = stmt.superClass ? ` extends ${stmt.superClass.name}` : '';
+    const lines: string[] = [`${this.indent()}class ${stmt.name}${extendsClause} {`];
+    this.indentLevel++;
+
+    if (stmt.constructorMethod) {
+      const params = stmt.constructorMethod.params.join(', ');
+      const header = `${this.indent()}constructor(${params}) {`;
+      lines.push(header);
+      this.indentLevel++;
+      if (stmt.superClass) {
+        lines.push(`${this.indent()}super();`);
+      }
+      for (const s of stmt.constructorMethod.body.body) {
+        lines.push(this.generateStatement(s));
+      }
+      this.indentLevel--;
+      lines.push(`${this.indent()}}`);
+    }
+
+    for (const method of stmt.methods) {
+      const asyncPrefix = method.isAsync ? 'async ' : '';
+      const params = method.params.join(', ');
+      const header = `${this.indent()}${asyncPrefix}${method.name}(${params}) `;
+      const body = this.generateBlockStatement(method.body);
+      lines.push(`${header}${body.trimStart()}`);
+    }
+
+    this.indentLevel--;
+    lines.push(`${this.indent()}}`);
+    return lines.join('\n');
+  }
+
+  private generateSwitchStatement(stmt: SwitchStatement): string {
+    const lines: string[] = [`${this.indent()}switch (${this.generateExpression(stmt.discriminant)}) {`];
+    this.indentLevel++;
+
+    for (const c of stmt.cases) {
+      if (c.test) {
+        lines.push(`${this.indent()}case ${this.generateExpression(c.test)}:`);
+      } else {
+        lines.push(`${this.indent()}default:`);
+      }
+      this.indentLevel++;
+      for (const s of c.consequent) {
+        lines.push(this.generateStatement(s));
+      }
+      this.indentLevel--;
+    }
+
+    this.indentLevel--;
+    lines.push(`${this.indent()}}`);
+    return lines.join('\n');
+  }
+
+  private generateImportDeclaration(stmt: ImportDeclaration): string {
+    const parts: string[] = [];
+    if (stmt.defaultSpecifier) {
+      parts.push(stmt.defaultSpecifier);
+    }
+    if (stmt.specifiers.length > 0) {
+      const specList = stmt.specifiers
+        .map(s => (s.imported === s.local ? s.imported : `${s.imported} as ${s.local}`))
+        .join(', ');
+      parts.push(`{ ${specList} }`);
+    }
+    return `${this.indent()}import ${parts.join(', ')} from ${JSON.stringify(stmt.source)};`;
+  }
+
+  private generateExportDeclaration(stmt: ExportDeclaration): string {
+    if (stmt.isDefault && stmt.declaration) {
+      if (stmt.declaration.type === 'ExpressionStatement') {
+        return `${this.indent()}export default ${this.generateExpression(stmt.declaration.expression)};`;
+      }
+      return `${this.indent()}export default ${this.generateStatement(stmt.declaration).trimStart()}`;
+    }
+    if (stmt.declaration) {
+      return `${this.indent()}export ${this.generateStatement(stmt.declaration).trimStart()}`;
+    }
+    return '';
   }
 
   private generateIfStatement(stmt: IfStatement): string {
@@ -190,6 +291,37 @@ export class CodeGenerator {
         return 'undefined';
       case 'Identifier':
         return expr.name;
+      case 'ThisExpression':
+        return 'this';
+      case 'NewExpression':
+        const newArgs = expr.arguments.map(a => this.generateExpression(a)).join(', ');
+        return `new ${this.generateExpression(expr.callee)}(${newArgs})`;
+      case 'AwaitExpression':
+        return `(await ${this.generateExpression(expr.argument)})`;
+      case 'ConditionalExpression':
+        return `(${this.generateExpression(expr.test)} ? ${this.generateExpression(expr.consequent)} : ${this.generateExpression(expr.alternate)})`;
+      case 'ArrowFunctionExpression': {
+        const asyncPrefix = expr.isAsync ? 'async ' : '';
+        const params = expr.params.join(', ');
+        let bodyCode: string;
+        if (expr.body.type === 'BlockStatement') {
+          bodyCode = this.generateBlockStatement(expr.body).trimStart();
+        } else {
+          bodyCode = this.generateExpression(expr.body);
+        }
+        return `${asyncPrefix}(${params}) => ${bodyCode}`;
+      }
+      case 'TemplateLiteral': {
+        let result = '`';
+        for (let i = 0; i < expr.quasis.length; i++) {
+          result += expr.quasis[i];
+          if (i < expr.expressions.length) {
+            result += `\${${this.generateExpression(expr.expressions[i])}}`;
+          }
+        }
+        result += '`';
+        return result;
+      }
       case 'BinaryExpression':
         return `(${this.generateExpression(expr.left)} ${expr.operator} ${this.generateExpression(expr.right)})`;
       case 'UnaryExpression':

@@ -1,0 +1,33 @@
+// ==========================================
+// 06. OOP & Class (Bhângsa, Nyiptaaghi, Dibi')
+// ==========================================
+
+// Definisi kelas Pendekar
+bhangsa Pendekar {
+  nyiptaaghi(nyama, senjata) {
+    dibi'.nyama = nyama;
+    dibi'.senjata = senjata;
+  }
+
+  serang() {
+    kocaaghi(`${dibi'.nyama} nyerang ngangghuy ${dibi'.senjata}!`);
+  }
+}
+
+// Pewarisan kelas (Inheritance)
+bhangsa Jawara katoronan Pendekar {
+  nyiptaaghi(nyama, senjata, pangkat) {
+    dibi'.nyama = nyama;
+    dibi'.senjata = senjata;
+    dibi'.pangkat = pangkat;
+  }
+
+  tampilPangkat() {
+    dibi'.serang();
+    kocaaghi(`Pangkat jawara: ${dibi'.pangkat} dhari Pamekasan!`);
+  }
+}
+
+// Inisialisasi objek anyar (new)
+sango sakera = anyar Jawara("Sakera", "Calok Sakti", "Panglima Utama");
+sakera.tampilPangkat();

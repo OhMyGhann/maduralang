@@ -9,9 +9,9 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg)](https://nodejs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.5-blue.svg)](https://www.typescriptlang.org/)
-[![Tests](https://img.shields.io/badge/tests-11%20passed-brightgreen.svg)]()
+[![Tests](https://img.shields.io/badge/tests-19%20passed-brightgreen.svg)]()
 
-**MaduraLang** adalah bahasa pemrograman esoterik (*recreational language*) dengan sintaksis berbasis kosa kata bahasa Madura. MaduraLang di-transpile langsung ke JavaScript modern sehingga cepat, modular, dan dapat dijalankan di mana saja (Node.js & browser).
+**MaduraLang** adalah bahasa pemrograman esoterik (*recreational language*) modern dengan sintaksis berbasis kosa kata bahasa Madura. Dilengkapi paritas fitur ala JavaScript modern seperti **Object-Oriented Programming (Class/OOP)**, **Async/Await**, **Arrow Functions**, **Template Literals**, **Module System**, dan **Switch-Case**. MaduraLang di-transpile langsung ke JavaScript modern sehingga cepat, modular, dan dapat dijalankan di mana saja (Node.js & browser).
 
 [Web Playground](playground/index.html) • [Tata Bahasa](docs/tata-bahasa.md) • [Contoh Kode](examples/) • [Ekstensi VS Code](vscode-extension/) • [Kontribusi](CONTRIBUTING.md)
 
@@ -19,36 +19,32 @@
 
 ---
 
-## ⚡ Sekilas Contoh Kode (`.mdr`)
+## ⚡ Sekilas Contoh Kode Modern (`.mdr`)
 
 ```mdr
-// Deklarasi variabel & konstanta
-sango nyama = "Sakera";
-paggun asal = "Pamekasan";
-sango omor = 25;
-
-// Output
-kocaaghi("Salam settong dhere!");
-kocaaghi("Nyama engkok: " + nyama + " dhari " + asal);
-
-// Logika percabangan
-lamon (omor >= 17) {
-  kocaaghi("Lah towa, wajib ngodeh!");
-} lamon enja' (omor >= 12) {
-  kocaaghi("Gi' ngodhadan");
-} laen {
-  kocaaghi("Kene' kene'!");
-}
-
-// Fungsi & Perulangan
-lakona petong(maks) {
-  poter (sango i = 1; i <= maks; i++) {
-    kocaaghi("Putaran ka-" + i);
+// OOP / Class
+bhangsa Pendekar {
+  nyiptaaghi(nyama, senjata) {
+    dibi'.nyama = nyama;
+    dibi'.senjata = senjata;
   }
-  pabali "Mareh!";
+
+  serang() {
+    kocaaghi(`${dibi'.nyama} nyerang ngangghuy ${dibi'.senjata}!`);
+  }
 }
 
-petong(3);
+sango sakera = anyar Pendekar("Sakera", "Calok Sakti");
+sakera.serang();
+
+// Asynchronous Programming
+nyambi lakona ambeleData() {
+  kocaaghi("Gi' ngantos respon...");
+  sango respon = antose anyar Promise((resolve) => setTimeout(resolve, 500));
+  kocaaghi("Berres!");
+}
+
+antose ambeleData();
 ```
 
 ---
@@ -110,6 +106,18 @@ madura
 | **Undefined** | `ta_tao` | `undefined` | Tidak tahu / belum jelas |
 | **Fungsi** | `lakona` | `function` | Pekerjaan / tindakan |
 | **Return** | `pabali` | `return` | Kembalikan |
+| **Class (OOP)** | `bhangsa` | `class` | Golongan / wujud kelas |
+| **Inheritance** | `katoronan` | `extends` | Keturunan / warisan |
+| **Constructor** | `nyiptaaghi` | `constructor` | Menciptakan / merancang |
+| **Instance Baru** | `anyar` | `new` | Baru |
+| **This (Self)** | `dibi'` | `this` | Diri sendiri |
+| **Async** | `nyambi` | `async` | Sambil lalu / jalan di latar |
+| **Await** | `antose` | `await` | Menunggu hasil |
+| **Import** | `ngala'` ... `dhari` | `import` ... `from` | Ambil ... dari |
+| **Export** | `baghi` | `export` | Bagikan ke luar |
+| **Switch** | `pilih` | `switch` | Pilih kondisi |
+| **Case** | `kadhadhiyan` | `case` | Peristiwa / kejadian |
+| **Default** | `bawaan` | `default` | Bawaan / selebihnya |
 | **Try** | `jhe_sossa` | `try` | Jangan risau / coba dulu |
 | **Catch** | `ngarte` | `catch` | Mengerti / menangkap |
 | **Throw** | `ngamok` | `throw` | Mengamuk / melempar error |
