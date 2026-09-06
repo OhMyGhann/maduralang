@@ -36,6 +36,20 @@ describe('Pustaka Kamus & Penerjemah Madura (madura/kamus)', () => {
     expect(hasilTidur).toBe('sare');
   });
 
+  it('mampu menerjemahkan kalimat kompleks arah dan gerakan: "aku kemaren lari ke utara"', () => {
+    // Santai (Enja'-Iya)
+    const santai = terjemahKaMadura('aku kemaren lari ke utara', 'enja-iya');
+    expect(santai).toBe("engkok bari'to buru ka daja");
+
+    // Halus (Engghi-Bhunten)
+    const halus = terjemahKaMadura('aku kemaren lari ke utara', 'engghi-bhunten');
+    expect(halus).toBe("abdhina kalaenta ngalencak dha' daja");
+
+    // Sopan (Engghi-Enten)
+    const sopan = terjemahKaMadura('aku kemaren lari ke utara', 'engghi-enten');
+    expect(sopan).toBe("kula bari'to buru ka daja");
+  });
+
   it('dapat menerjemahkan kembali dari Madura ke Indonesia', () => {
     const ind = terjemahKaIndonesia('mator sakalangkong');
     expect(ind).toContain('terima kasih');
