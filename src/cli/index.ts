@@ -14,7 +14,7 @@ ${chalk.red.bold(' | |  | | (_| | (_| | |_| | | | (_| | |___| (_| | | | | (_| |'
 ${chalk.white.bold(' |_|  |_|\\__,_|\\__,_|\\__,_|_|  \\__,_|______\\__,_|_| |_|\\__, |')}
 ${chalk.red.bold('                                                        __/ |')}
 ${chalk.white.bold('                                                       |___/ ')}
-  ${chalk.yellow.bold('Salam Settong Dhere!')} ${chalk.cyan('Bahasa Pemrograman Madura (v1.0.0)')}
+  ${chalk.yellow.bold('Salam Settong Dhere!')} ${chalk.cyan('Bahasa Pemrograman Madura (v2.0.0)')}
 `;
 
 export function createCli(): Command {
@@ -23,7 +23,7 @@ export function createCli(): Command {
   program
     .name('madura')
     .description('CLI Resmi MaduraLang - Bahasa Pemrograman Khas Madura')
-    .version('1.0.0');
+    .version('2.0.0');
 
   // Command: run
   program
