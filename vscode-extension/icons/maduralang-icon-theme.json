@@ -1,0 +1,10 @@
+{
+  "iconDefinitions": {
+    "_file_mdr": {
+      "iconPath": "./logo.png"
+    }
+  },
+  "fileExtensions": {
+    "mdr": "_file_mdr"
+  }
+}

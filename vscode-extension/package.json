@@ -23,7 +23,11 @@
         "id": "maduralang",
         "aliases": ["MaduraLang", "maduralang", "mdr"],
         "extensions": [".mdr"],
-        "configuration": "./language-configuration.json"
+        "configuration": "./language-configuration.json",
+        "icon": {
+          "light": "./icon.png",
+          "dark": "./icon.png"
+        }
       }
     ],
     "grammars": [
@@ -31,6 +35,13 @@
         "language": "maduralang",
         "scopeName": "source.mdr",
         "path": "./syntaxes/maduralang.tmLanguage.json"
+      }
+    ],
+    "iconThemes": [
+      {
+        "id": "maduralang-icons",
+        "label": "MaduraLang File Icons",
+        "path": "./icons/maduralang-icon-theme.json"
       }
     ]
   }
