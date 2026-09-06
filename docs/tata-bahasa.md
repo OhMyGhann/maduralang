@@ -13,7 +13,7 @@ Dokumen ini berisi spesifikasi resmi tata bahasa, kata kunci (*keywords*), dan k
 
 ```mdr
 sango nyama = "Tretan";
-nyama = "Mat Sakera"; // Valid
+nyama = "Sakera"; // Valid
 
 paggun pi = 3.14;
 // pi = 3.15; // Error

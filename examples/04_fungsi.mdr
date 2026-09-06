@@ -26,7 +26,7 @@ kocaaghi("Kakanan Madura favorit: " + kakanan[1]);
 sango pahlawan = {
   nyama: "Sakera",
   senjata: "Calok",
-  asal: "Bangkalan"
+  asal: "Pamekasan"
 };
 
 kocaaghi("Pahlawan: " + pahlawan.nyama + ", Senjata: " + pahlawan.senjata);

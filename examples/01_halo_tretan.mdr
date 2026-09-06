@@ -3,8 +3,8 @@
 // ==========================================
 
 // Deklarasi variabel ngangghuy 'sango' (let) ban 'paggun' (const)
-sango nyama = "Mat Sakera";
-paggun asal = "Madura";
+sango nyama = "Sakera";
+paggun asal = "Pamekasan";
 sango omor = 25;
 
 // Output ngangghuy 'kocaaghi'

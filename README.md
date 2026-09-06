@@ -1,6 +1,8 @@
 <div align="center">
 
-# 🐂 MaduraLang (.mdr)
+<img src="assets/logo.png" alt="MaduraLang" width="220" />
+
+# MaduraLang (`.mdr`)
 
 ### *Salam Settong Dhere! Bahasa Pemrograman Khas Madura.*
 
@@ -21,8 +23,8 @@
 
 ```mdr
 // Deklarasi variabel & konstanta
-sango nyama = "Mat Sakera";
-paggun asal = "Bangkalan";
+sango nyama = "Sakera";
+paggun asal = "Pamekasan";
 sango omor = 25;
 
 // Output
@@ -185,4 +187,4 @@ Dibuat dengan ❤️ oleh **[OhMyGhann](https://github.com/OhMyGhann)**.
 
 Didistribusikan di bawah Lisensi MIT. Lihat [LICENSE](LICENSE) untuk informasi lebih lanjut.
 
-*Mator sakalangkong! Salam settong dhere!* 🐂
+*Mator sakalangkong! Salam settong dhere!*

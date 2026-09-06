@@ -1,4 +1,4 @@
-# Panduan Kontribusi MaduraLang 🐂
+# Panduan Kontribusi MaduraLang
 
 Halo Tretan! Terima kasih telah tertarik berkontribusi pada **MaduraLang**!
 
