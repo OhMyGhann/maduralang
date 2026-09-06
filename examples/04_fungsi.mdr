@@ -1,0 +1,32 @@
+// ==========================================
+// 04. Lakona (Fungsi) & Struktur Data
+// ==========================================
+
+lakona tamba(a, b) {
+  pabali a + b;
+}
+
+lakona faktorial(n) {
+  lamon (n <= 1) {
+    pabali 1;
+  }
+  pabali n * faktorial(n - 1);
+}
+
+sango hasel_tamba = tamba(15, 25);
+kocaaghi("Hasel tamba 15 + 25 = " + hasel_tamba);
+
+sango hasel_fak = faktorial(5);
+kocaaghi("Hasel faktorial 5! = " + hasel_fak);
+
+// Array ban Objek
+sango kakanan = ["Sate Madura", "Bebek Sinjay", "Tajin Sobih", "Nasi Campur"];
+kocaaghi("Kakanan Madura favorit: " + kakanan[1]);
+
+sango pahlawan = {
+  nyama: "Sakera",
+  senjata: "Calok",
+  asal: "Bangkalan"
+};
+
+kocaaghi("Pahlawan: " + pahlawan.nyama + ", Senjata: " + pahlawan.senjata);

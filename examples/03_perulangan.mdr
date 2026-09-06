@@ -1,0 +1,23 @@
+// ==========================================
+// 03. Perulangan (Poter & Sampek)
+// ==========================================
+
+kocaaghi("--- Perulangan ngangghuy Poter (For) ---");
+poter (sango i = 1; i <= 5; i++) {
+  lamon (i == 3) {
+    kocaaghi("Nomer 3 e-langkahi (terros)!");
+    terros;
+  }
+  kocaaghi("Putaran ka-" + i);
+}
+
+kocaaghi("\n--- Perulangan ngangghuy Sampek (While) ---");
+sango count = 5;
+sampek (count > 0) {
+  kocaaghi("Itongan toron: " + count);
+  lamon (count == 2) {
+    kocaaghi("Ambu neng angka 2!");
+    ambu;
+  }
+  count--;
+}

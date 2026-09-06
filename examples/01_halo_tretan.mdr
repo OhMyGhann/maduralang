@@ -1,0 +1,23 @@
+// ==========================================
+// 01. Halo Tretan (Hello World & Variabel)
+// ==========================================
+
+// Deklarasi variabel ngangghuy 'sango' (let) ban 'paggun' (const)
+sango nyama = "Mat Sakera";
+paggun asal = "Madura";
+sango omor = 25;
+
+// Output ngangghuy 'kocaaghi'
+kocaaghi("Salam settong dhere!");
+kocaaghi("Nyama engkok: " + nyama);
+kocaaghi("Asal dhari: " + asal);
+kocaaghi("Omor: " + omor + " taon");
+
+// Tipe boolean ban null
+sango taretan_asli = bhender;
+sango muso = sala;
+sango kosong = tadhe';
+
+kocaaghi("Taretan asli? " + taretan_asli);
+kocaaghi("Muso? " + muso);
+kocaaghi("Kosong: " + kosong);

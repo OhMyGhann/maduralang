@@ -1,0 +1,37 @@
+{
+  "name": "maduralang",
+  "version": "1.0.0",
+  "description": "Bahasa pemrograman esoterik bertema bahasa Madura, di-transpile langsung ke JavaScript.",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "madura": "./bin/madura.js",
+    "mdr": "./bin/madura.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "node bin/madura.js",
+    "test": "vitest run"
+  },
+  "keywords": [
+    "madura",
+    "maduralang",
+    "programming-language",
+    "esolang",
+    "transpiler",
+    "compiler"
+  ],
+  "author": "OhMyGhann",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "commander": "^12.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.5.4",
+    "typescript": "^5.5.4",
+    "vitest": "^2.0.5"
+  }
+}

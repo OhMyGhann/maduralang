@@ -1,0 +1,31 @@
+{
+  "name": "maduralang-vscode",
+  "displayName": "MaduraLang Language Support",
+  "description": "Dukungan syntax highlighting dan tata bahasa untuk MaduraLang (.mdr)",
+  "version": "1.0.0",
+  "publisher": "OhMyGhann",
+  "author": "OhMyGhann",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "maduralang",
+        "aliases": ["MaduraLang", "maduralang", "mdr"],
+        "extensions": [".mdr"],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "maduralang",
+        "scopeName": "source.mdr",
+        "path": "./syntaxes/maduralang.tmLanguage.json"
+      }
+    ]
+  }
+}

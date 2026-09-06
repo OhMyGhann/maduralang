@@ -1,0 +1,33 @@
+// ==========================================
+// 02. Percabangan Kondisional
+// ==========================================
+
+sango nilai = 85;
+sango hadir = bhender;
+
+kocaaghi("--- HASIL UJIAN SANTRI ---");
+
+lamon (nilai >= 90 ban hadir == bhender) {
+  kocaaghi("Nilai A: Mumtaz! Hebat ongghu tretan!");
+} lamon enja' (nilai >= 75 ban hadir == bhender) {
+  kocaaghi("Nilai B: Jayyid Jiddan! Bagus tretan.");
+} lamon enja' (nilai >= 60) {
+  kocaaghi("Nilai C: Maqbul, gi' olle lulus.");
+} laen {
+  kocaaghi("Nilai D: Rosak, kodhu ngulang taon aji!");
+}
+
+sango lapar = bhender;
+sango andik_pesse = sala;
+
+lamon (lapar otaba andik_pesse) {
+  kocaaghi("Ngireng ngakan sate Madura!");
+} laen {
+  kocaaghi("Toro' posa sunnah bhei.");
+}
+
+// Operator benne (!)
+sango sakik = sala;
+lamon (benne sakik) {
+  kocaaghi("Sehat wal afiat, siap alako!");
+}

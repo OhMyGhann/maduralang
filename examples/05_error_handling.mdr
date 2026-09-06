@@ -1,0 +1,24 @@
+// ==========================================
+// 05. Error Handling (Jhe' Sossa & Ngarte)
+// ==========================================
+
+lakona bagi_beras(total_beras, oreng) {
+  lamon (oreng == 0) {
+    ngamok("Sala rajhe: Ta' olle bagi beras ka nol oreng!");
+  }
+  pabali total_beras / oreng;
+}
+
+jhe_sossa {
+  kocaaghi("--- Percobaan 1: Bagi bhender ---");
+  sango hasel1 = bagi_beras(100, 4);
+  kocaaghi("Sabbhan oreng olle: " + hasel1 + " kg");
+
+  kocaaghi("\n--- Percobaan 2: Bagi sala ---");
+  sango hasel2 = bagi_beras(100, 0);
+  kocaaghi("Hasel ta' kera kalowar: " + hasel2);
+} ngarte (err) {
+  kocaaghi("Waduh, bada sala e-tangkep: " + err);
+} totop {
+  kocaaghi("Totop: Alako pembagian beras ampon marè!");
+}

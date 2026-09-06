@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MaduraLang Playground - Coba Bahasa Koding Madura di Browser</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0f1117;
+      --panel-bg: #181b24;
+      --header-bg: #12141c;
+      --border-color: #272c3d;
+      --primary-red: #e63946;
+      --accent-gold: #f4a261;
+      --text-main: #f1faee;
+      --text-muted: #8d99ae;
+      --console-bg: #090a0f;
+      --font-ui: 'Plus Jakarta Sans', sans-serif;
+      --font-code: 'Fira Code', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-ui);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    header {
+      background: var(--header-bg);
+      border-bottom: 1px solid var(--border-color);
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-badge {
+      background: linear-gradient(135deg, var(--primary-red), #b7094c);
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      box-shadow: 0 4px 12px rgba(230, 57, 70, 0.4);
+    }
+
+    .title-group h1 {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(90deg, #fff, var(--accent-gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .title-group p {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    select {
+      background: var(--panel-bg);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-family: var(--font-ui);
+      font-size: 13px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    select:focus {
+      border-color: var(--accent-gold);
+    }
+
+    button {
+      font-family: var(--font-ui);
+      font-weight: 600;
+      font-size: 13px;
+      padding: 8px 18px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-run {
+      background: linear-gradient(135deg, var(--primary-red), #c1121f);
+      color: white;
+      box-shadow: 0 4px 14px rgba(230, 57, 70, 0.4);
+    }
+
+    .btn-run:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(230, 57, 70, 0.6);
+    }
+
+    .btn-clear {
+      background: #242938;
+      color: var(--text-muted);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-clear:hover {
+      color: white;
+      background: #2f364a;
+    }
+
+    .github-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      transition: all 0.2s;
+    }
+
+    .github-link:hover {
+      color: white;
+      border-color: var(--accent-gold);
+    }
+
+    /* Main Workspace */
+    main {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .editor-pane {
+      flex: 1.2;
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid var(--border-color);
+      background: var(--panel-bg);
+    }
+
+    .pane-header {
+      padding: 8px 16px;
+      background: var(--header-bg);
+      border-bottom: 1px solid var(--border-color);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    textarea#editor {
+      flex: 1;
+      background: var(--panel-bg);
+      color: #79c0ff;
+      border: none;
+      padding: 16px;
+      font-family: var(--font-code);
+      font-size: 14px;
+      line-height: 1.6;
+      resize: none;
+      outline: none;
+      tab-size: 2;
+    }
+
+    .output-pane {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: var(--console-bg);
+    }
+
+    .output-tabs {
+      display: flex;
+      gap: 8px;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .tab-btn.active {
+      color: var(--accent-gold);
+      background: #1e2230;
+    }
+
+    .terminal-view {
+      flex: 1;
+      padding: 16px;
+      overflow-y: auto;
+      font-family: var(--font-code);
+      font-size: 13px;
+      line-height: 1.6;
+      color: #a7f3d0;
+      white-space: pre-wrap;
+    }
+
+    .js-view {
+      flex: 1;
+      padding: 16px;
+      overflow-y: auto;
+      font-family: var(--font-code);
+      font-size: 13px;
+      line-height: 1.6;
+      color: #93c5fd;
+      white-space: pre-wrap;
+      display: none;
+      background: #0d1117;
+    }
+
+    .badge-status {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 12px;
+      background: #1e293b;
+      color: var(--text-muted);
+    }
+
+    .badge-status.success {
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+    }
+
+    .badge-status.error {
+      background: rgba(239, 68, 68, 0.2);
+      color: #f87171;
+    }
+
+    footer {
+      padding: 6px 20px;
+      background: var(--header-bg);
+      border-top: 1px solid var(--border-color);
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <div class="logo-badge">🐂</div>
+      <div class="title-group">
+        <h1>MaduraLang Playground</h1>
+        <p>Salam Settong Dhere! Dibuat oleh OhMyGhann</p>
+      </div>
+    </div>
+
+    <div class="controls">
+      <select id="exampleSelect">
+        <option value="01">01. Halo Tretan (Variabel)</option>
+        <option value="02">02. Percabangan Santri (If Else)</option>
+        <option value="03">03. Perulangan (Poter & Sampek)</option>
+        <option value="04">04. Lakona (Fungsi & Array)</option>
+        <option value="05">05. Jhe' Sossa (Error Handling)</option>
+      </select>
+
+      <button id="runBtn" class="btn-run">
+        <span>⚡</span> Jalankan (Run)
+      </button>
+
+      <button id="clearBtn" class="btn-clear">
+        Bersihkan
+      </button>
+
+      <a href="https://github.com/OhMyGhann/maduralang" target="_blank" class="github-link">
+        GitHub
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <!-- Code Editor Section -->
+    <div class="editor-pane">
+      <div class="pane-header">
+        <span>KODE MADURALANG (.mdr)</span>
+        <span class="badge-status">UTF-8</span>
+      </div>
+      <textarea id="editor" spellcheck="false"></textarea>
+    </div>
+
+    <!-- Output & JS View Section -->
+    <div class="output-pane">
+      <div class="pane-header">
+        <div class="output-tabs">
+          <button id="tabConsole" class="tab-btn active">Terminal Output</button>
+          <button id="tabJs" class="tab-btn">Hasil Transpile JS</button>
+        </div>
+        <span id="statusBadge" class="badge-status">Siap</span>
+      </div>
+
+      <div id="terminal" class="terminal-view">Selamat datang di MaduraLang Playground!
+Tekan tombol "Jalankan (Run)" atau pilih contoh kode di atas.</div>
+
+      <pre id="jsView" class="js-view"></pre>
+    </div>
+  </main>
+
+  <footer>
+    <span>MaduraLang v1.0.0 • Author: OhMyGhann</span>
+    <span>Transpiled to JavaScript ES2022</span>
+  </footer>
+
+  <script type="module">
+    import { compileMadura } from './compiler-browser.js';
+
+    const EXAMPLES = {
+      '01': `// 01. Halo Tretan
+sango nyama = "Mat Sakera";
+paggun asal = "Bangkalan";
+sango omor = 25;
+
+kocaaghi("Salam settong dhere!");
+kocaaghi("Nyama engkok: " + nyama + " dhari " + asal);
+kocaaghi("Omor: " + omor + " taon");
+
+sango taretan_asli = bhender;
+sango muso = sala;
+sango kosong = tadhe';
+
+kocaaghi("Taretan asli? " + taretan_asli);
+kocaaghi("Muso? " + muso);
+kocaaghi("Kosong: " + kosong);`,
+
+      '02': `// 02. Percabangan Santri
+sango nilai = 85;
+sango hadir = bhender;
+
+kocaaghi("--- HASIL UJIAN SANTRI ---");
+
+lamon (nilai >= 90 ban hadir == bhender) {
+  kocaaghi("Nilai A: Mumtaz! Hebat ongghu tretan!");
+} lamon enja' (nilai >= 75 ban hadir == bhender) {
+  kocaaghi("Nilai B: Jayyid Jiddan! Bagus tretan.");
+} lamon enja' (nilai >= 60) {
+  kocaaghi("Nilai C: Maqbul, gi' olle lulus.");
+} laen {
+  kocaaghi("Nilai D: Rosak, kodhu ngulang taon aji!");
+}
+
+sango lapar = bhender;
+lamon (lapar) {
+  kocaaghi("Ngireng ngakan sate Madura!");
+}`,
+
+      '03': `// 03. Perulangan Poter & Sampek
+kocaaghi("--- Perulangan ngangghuy Poter (For) ---");
+poter (sango i = 1; i <= 5; i++) {
+  lamon (i == 3) {
+    kocaaghi("Nomer 3 e-langkahi!");
+    terros;
+  }
+  kocaaghi("Putaran ka-" + i);
+}
+
+kocaaghi("\\n--- Perulangan ngangghuy Sampek (While) ---");
+sango count = 3;
+sampek (count > 0) {
+  kocaaghi("Hitungan mundur: " + count);
+  count--;
+}`,
+
+      '04': `// 04. Lakona (Fungsi) & Array
+lakona petong_diskon(regga, persen) {
+  pabali regga - (regga * persen / 100);
+}
+
+sango regga_asli = 50000;
+sango hasel = petong_diskon(regga_asli, 20);
+kocaaghi("Regga saamponna diskon 20%: Rp" + hasel);
+
+sango kakanan = ["Sate Madura", "Bebek Sinjay", "Tajin Sobih"];
+kocaaghi("Kakanan khas: " + kakanan[1]);`,
+
+      '05': `// 05. Error Handling Jhe' Sossa
+lakona bagi_pesse(total, oreng) {
+  lamon (oreng == 0) {
+    ngamok("Sala rajhe: Ta' olle bagi pesse ka nol oreng!");
+  }
+  pabali total / oreng;
+}
+
+jhe_sossa {
+  kocaaghi("Mencoba membagi pesse:");
+  sango hasel = bagi_pesse(100000, 0);
+  kocaaghi("Hasel:", hasel);
+} ngarte (err) {
+  kocaaghi("Waduh bada masalah e-tangkep: " + err);
+} totop {
+  kocaaghi("Totop: Proses pembagian marè!");
+}`
+    };
+
+    const editor = document.getElementById('editor');
+    const terminal = document.getElementById('terminal');
+    const jsView = document.getElementById('jsView');
+    const exampleSelect = document.getElementById('exampleSelect');
+    const runBtn = document.getElementById('runBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const statusBadge = document.getElementById('statusBadge');
+    const tabConsole = document.getElementById('tabConsole');
+    const tabJs = document.getElementById('tabJs');
+
+    // Default load
+    editor.value = EXAMPLES['01'];
+
+    exampleSelect.addEventListener('change', (e) => {
+      editor.value = EXAMPLES[e.target.value] || '';
+      terminal.textContent = 'Contoh dimuat. Tekan "Jalankan (Run)".';
+      statusBadge.className = 'badge-status';
+      statusBadge.textContent = 'Siap';
+    });
+
+    clearBtn.addEventListener('click', () => {
+      terminal.textContent = '';
+      jsView.textContent = '';
+      statusBadge.className = 'badge-status';
+      statusBadge.textContent = 'Bersih';
+    });
+
+    // Tabs switch
+    tabConsole.addEventListener('click', () => {
+      tabConsole.classList.add('active');
+      tabJs.classList.remove('active');
+      terminal.style.display = 'block';
+      jsView.style.display = 'none';
+    });
+
+    tabJs.addEventListener('click', () => {
+      tabJs.classList.add('active');
+      tabConsole.classList.remove('active');
+      terminal.style.display = 'none';
+      jsView.style.display = 'block';
+    });
+
+    // Run Code
+    runBtn.addEventListener('click', async () => {
+      const code = editor.value;
+      terminal.textContent = '';
+      statusBadge.className = 'badge-status';
+      statusBadge.textContent = 'Menjalankan...';
+
+      try {
+        const js = compileMadura(code);
+        jsView.textContent = js;
+
+        const outputLogs = [];
+        const customKocaaghi = (...args) => {
+          outputLogs.push(args.map(a => typeof a === 'object' ? JSON.stringify(a) : String(a)).join(' '));
+        };
+
+        const runner = new Function('kocaaghi', `
+          try {
+            ${js}
+          } catch(e) {
+            throw e;
+          }
+        `);
+
+        runner(customKocaaghi);
+
+        terminal.textContent = outputLogs.join('\n') || '[Program selesai tanpa output]';
+        statusBadge.className = 'badge-status success';
+        statusBadge.textContent = '✓ Sukses';
+      } catch (err) {
+        terminal.textContent = '❌ Error:\n' + (err.message || err);
+        statusBadge.className = 'badge-status error';
+        statusBadge.textContent = 'Sala (Error)';
+      }
+    });
+
+    // Tab indentation in textarea
+    editor.addEventListener('keydown', function(e) {
+      if (e.key === 'Tab') {
+        e.preventDefault();
+        const start = this.selectionStart;
+        const end = this.selectionEnd;
+        this.value = this.value.substring(0, start) + '  ' + this.value.substring(end);
+        this.selectionStart = this.selectionEnd = start + 2;
+      }
+    });
+  </script>
+</body>
+</html>
