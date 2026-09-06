@@ -1,6 +1,6 @@
 {
   "name": "@ohmyghann/maduralang",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Bahasa pemrograman esoterik bertema bahasa Madura, di-transpile langsung ke JavaScript modern.",
   "type": "module",
   "main": "dist/index.js",
