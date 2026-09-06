@@ -2,9 +2,15 @@
   "name": "maduralang-vscode",
   "displayName": "MaduraLang Language Support",
   "description": "Dukungan syntax highlighting dan tata bahasa untuk MaduraLang (.mdr)",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "publisher": "OhMyGhann",
   "author": "OhMyGhann",
+  "license": "MIT",
+  "icon": "icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/OhMyGhann/maduralang"
+  },
   "engines": {
     "vscode": "^1.75.0"
   },
