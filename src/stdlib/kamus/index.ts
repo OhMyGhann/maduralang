@@ -1,7 +1,9 @@
 import { EntriKamus, ParbhasanData, TingkatBhasa } from './types.js';
 import { KOSAKATA_MADURA, PARBHASAN_MADURA } from './data.js';
+import { getStemCandidates } from './stemmer.js';
 
 export * from './types.js';
+export { getStemCandidates };
 export { KOSAKATA_MADURA, PARBHASAN_MADURA };
 
 /**
@@ -81,18 +83,17 @@ export function terjemahKaMadura(teksIndonesia: string, tingkat: TingkatBhasa = 
       k.artiIndonesia.some(arti => arti.toLowerCase() === cleanWord)
     );
 
-    // Jika tidak cocok langsung, coba hilangkan klitika Indonesia (-ku, -mu, -nya)
-    if (!match && cleanWord.length > 4) {
-      for (const suffix of ['ku', 'mu', 'nya']) {
-        if (cleanWord.endsWith(suffix)) {
-          const stem = cleanWord.slice(0, -suffix.length);
-          const stemMatch = KOSAKATA_MADURA.find(k =>
-            k.artiIndonesia.some(arti => arti.toLowerCase() === stem)
-          );
-          if (stemMatch) {
-            match = stemMatch;
-            break;
-          }
+    // Jika tidak cocok langsung, gunakan Stemmer Morfologi Cerdas
+    if (!match) {
+      const candidates = getStemCandidates(cleanWord);
+      for (const cand of candidates) {
+        if (cand === cleanWord) continue;
+        const candMatch = KOSAKATA_MADURA.find(k =>
+          k.artiIndonesia.some(arti => arti.toLowerCase() === cand)
+        );
+        if (candMatch) {
+          match = candMatch;
+          break;
         }
       }
     }
@@ -105,6 +106,16 @@ export function terjemahKaMadura(teksIndonesia: string, tingkat: TingkatBhasa = 
   });
 
   return hasil.join(' ');
+}
+
+/**
+ * Daftarkan kata atau kosakata baru ke kamus MaduraLang secara dinamis saat runtime
+ */
+export function daftarkanKata(entri: EntriKamus): void {
+  if (!entri || !entri.kataDasar || !entri.tingkatan) {
+    throw new Error("Entri kamus ta' lerres. Koddhu badha kataDasar ban tingkatan.");
+  }
+  KOSAKATA_MADURA.unshift(entri);
 }
 
 /**
