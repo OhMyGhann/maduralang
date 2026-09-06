@@ -968,9 +968,7 @@ export class CodeGenerator {
       case 'IfStatement': {
         let code = `${this.indent()}if (${this.generateExpression(stmt.test)}) ${this.generateStatement(stmt.consequent).trimStart()}`;
         if (stmt.alternate) {
-          code += (stmt.alternate.type === 'IfStatement')
-            ? ` else ${this.generateIfStatement(stmt.alternate).trimStart()}`
-            : ` else ${this.generateStatement(stmt.alternate).trimStart()}`;
+          code += ` else ${this.generateStatement(stmt.alternate).trimStart()}`;
         }
         return code;
       }
