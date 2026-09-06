@@ -11,7 +11,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg)](https://nodejs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.5-blue.svg)](https://www.typescriptlang.org/)
-[![Tests](https://img.shields.io/badge/tests-27%20passed-brightgreen.svg)]()
+[![Tests](https://img.shields.io/badge/tests-38%20passed-brightgreen.svg)]()
 
 **MaduraLang** adalah bahasa pemrograman esoterik (*recreational language*) modern dengan sintaksis berbasis kosa kata bahasa Madura. Dilengkapi paritas fitur ala JavaScript modern seperti **Object-Oriented Programming (Class/OOP)**, **Async/Await**, **Arrow Functions**, **Template Literals**, **Module System**, dan **Switch-Case**, serta pustaka bawaan resmi data wilayah Madura (**`madura/wilayah`**).
 
@@ -121,6 +121,48 @@ import { daftarKecamatan, cariWilayah, ringkasanStatistik } from '@ohmyghann/mad
 
 console.log(daftarKecamatan('Pamekasan'));
 console.log(cariWilayah('69363')); // Cari berdasarkan Kode Pos
+```
+
+---
+
+## 📖 Pustaka Standar Kamus & Penerjemah (`madura/kamus`)
+
+Kamus dwibahasa komprehensif dengan sistem **Ondhaggha Bhasa (Tingkatan Bahasa)**:
+- `enja-iya`: Akrab/Santai
+- `engghi-enten`: Sopan/Tengahan
+- `engghi-bhunten`: Halus/Krama Inggil
+
+### 1. Digunakan di MaduraLang (`.mdr`):
+```mdr
+ngala' { cariKata, terjemahKaMadura, ubahTingkat, parbhasan } dhari "madura/kamus";
+
+// Terjemah santai vs halus
+sango santai = terjemahKaMadura("saya makan", "enja-iya");        // "engkok ngakan"
+sango halus  = terjemahKaMadura("saya makan", "engghi-bhunten");  // "abdhina dha'ar"
+
+// Ubah tingkatan kata otomatis
+sango kataHalus = ubahTingkat("ngakan", "engghi-bhunten");        // "dha'ar"
+```
+
+### 2. Digunakan di JavaScript / TypeScript Biasa:
+```javascript
+import { terjemahKaMadura, cariKata, ubahTingkat, parbhasan } from '@ohmyghann/maduralang/kamus';
+
+console.log(terjemahKaMadura('terima kasih')); // "mator sakalangkong"
+console.log(ubahTingkat('be\'en', 'engghi-bhunten')); // "panjhenengngan"
+```
+
+### 3. Cek Kamus Langsung di Terminal:
+```bash
+# Buka info kamus & peribahasa hari ini
+madura kamus
+
+# Cari tingkatan kata makan
+madura kamus makan
+
+# Terjemahkan kalimat
+madura terjemah "saya tidur" --tingkat=halus
+# Output: "abdhina sare"
 ```
 
 ---

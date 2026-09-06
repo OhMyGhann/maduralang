@@ -14,3 +14,15 @@ export {
   ringkasanStatistik,
   SEMUA_DESA_MADURA
 } from './wilayah/index.js';
+export * as kamus from './kamus/index.js';
+export {
+  terjemahKaMadura,
+  terjemahKaIndonesia,
+  cariKata,
+  ubahTingkat,
+  daftarKosakata,
+  parbhasan,
+  ringkasanKamus,
+  KOSAKATA_MADURA,
+  PARBHASAN_MADURA
+} from './kamus/index.js';

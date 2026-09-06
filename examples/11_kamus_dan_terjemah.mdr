@@ -1,0 +1,61 @@
+// ==========================================================
+// 11. Pustaka Kamus & Penerjemah Madura (madura/kamus)
+// Ondhaggha Bhasa (Tingkatan Bahasa) & Parbhasan Madura
+// ==========================================================
+
+ngala' { cariKata, terjemahKaMadura, terjemahKaIndonesia, ubahTingkat, parbhasan, ringkasanKamus } dhari "madura/kamus";
+
+kocaaghi("==================================================");
+kocaaghi("     KAMUS & PENERJEMAH DWIBAHASA MADURA          ");
+kocaaghi("   Dibuat oleh OhMyGhann kaangghuy MaduraLang     ");
+kocaaghi("==================================================");
+
+// 1. Ringkasan Pustaka Kamus
+sango stats = ringkasanKamus();
+kocaaghi(`Pustaka          : ${stats.namaPustaka}`);
+kocaaghi(`Total Kosakata   : ${stats.totalEntriKata} kata dasar`);
+kocaaghi(`Total Parbhasan  : ${stats.totalParbhasan} peribahasa\n`);
+
+// 2. Eksplorasi Tingkatan Bahasa (Ondhaggha Bhasa)
+kocaaghi("--- ONDHAGGHA BHASA (KATA 'MAKAN') ---");
+sango kataMakan = cariKata("makan");
+lamon (kataMakan) {
+  kocaaghi(`Kata Dasar    : ${kataMakan.kataDasar}`);
+  kocaaghi(`1. Enja'-Iya  (Santai) : ${kataMakan.tingkatan.enjaIya}`);
+  kocaaghi(`2. Engghi-Enten (Sopan): ${kataMakan.tingkatan.engghiEnten}`);
+  kocaaghi(`3. Engghi-Bhunten(Halus): ${kataMakan.tingkatan.engghiBhunten}`);
+}
+
+// 3. Penerjemah Kalimat: Indonesia ke Madura
+kocaaghi("\n--- PENERJEMAH INDONESIA KE MADURA ---");
+sango kalimat = "saya makan";
+sango hasilSantai = terjemahKaMadura(kalimat, "enja-iya");
+sango hasilHalus  = terjemahKaMadura(kalimat, "engghi-bhunten");
+
+kocaaghi(`Kalimat Asli        : "${kalimat}"`);
+kocaaghi(`Bahasa Santai       : "${hasilSantai}"`);
+kocaaghi(`Bahasa Halus/Krama  : "${hasilHalus}"`);
+
+// 4. Penerjemahan Madura ke Indonesia
+kocaaghi("\n--- PENERJEMAH MADURA KE INDONESIA ---");
+sango teksMadura = "mator sakalangkong";
+sango arti = terjemahKaIndonesia(teksMadura);
+kocaaghi(`"${teksMadura}" -> "${arti}"`);
+
+// 5. Ubah Tingkat Kata Otomatis (Convert Politeness)
+kocaaghi("\n--- KONVERSI TINGKATAN KATA OTOMATIS ---");
+sango kataAkrab = "ngakan";
+sango jadiHalus = ubahTingkat(kataAkrab, "engghi-bhunten");
+kocaaghi(`Kata Akrab "${kataAkrab}" diubah ke Halus jadi: "${jadiHalus}"`);
+
+// 6. Ensiklopedia Peribahasa Madura (Parbhasan)
+kocaaghi("\n--- PARBHASAN BIJAK MADURA ---");
+sango pepatah = parbhasan(bhender); // Ambil acak
+kocaaghi(`Teks   : "${pepatah.teks}"`);
+kocaaghi(`Arti   : ${pepatah.artiHarfiah}`);
+kocaaghi(`Makna  : ${pepatah.maknaFilosofis}`);
+kocaaghi(`Tema   : ${pepatah.tema}`);
+
+kocaaghi("\n==================================================");
+kocaaghi(" Mator sakalangkong! Salam settong dhere! ");
+kocaaghi("==================================================");

@@ -123,6 +123,84 @@ export function createCli(): Command {
       }
     });
 
+  // Command: kamus
+  program
+    .command('kamus [kata]')
+    .description('Cari kata dalam Kamus Bahasa Madura (Ondhaggha Bhasa / Tingkatan Bahasa)')
+    .action(async (kata?: string) => {
+      try {
+        const { cariKata, ringkasanKamus, parbhasan } = await import('../stdlib/kamus/index.js');
+
+        if (!kata) {
+          const stats = ringkasanKamus();
+          console.log(chalk.red.bold('\n=== KAMUS DWIBAHASA MADURALANG ==='));
+          console.log(chalk.white(`Total Entri Kata : ${chalk.yellow.bold(stats.totalEntriKata)} Kosakata Resmi`));
+          console.log(chalk.white(`Total Parbhasan  : ${chalk.yellow.bold(stats.totalParbhasan)} Peribahasa Khas Madura`));
+          console.log(chalk.gray('Tingkatan Tutur  : Enja\'-Iya (Akrab), Engghi-Enten (Sopan), Engghi-Bhunten (Halus)\n'));
+
+          const randomParbhasan = parbhasan(true) as any;
+          console.log(chalk.cyan.bold('💡 PARBHASAN MADURA HARI INI:'));
+          console.log(chalk.yellow.bold(`"${randomParbhasan.teks}"`));
+          console.log(chalk.white(`Arti  : ${randomParbhasan.artiHarfiah}`));
+          console.log(chalk.gray(`Makna : ${randomParbhasan.maknaFilosofis}`));
+          console.log(chalk.gray('\nGunakan: madura kamus <kata> atau madura terjemah <kalimat>\n'));
+          return;
+        }
+
+        const hasil = cariKata(kata);
+        if (!hasil) {
+          console.log(chalk.yellow(`\n[!] Kata "${kata}" ta' e-temmo neng kamus.`));
+          return;
+        }
+
+        console.log(chalk.green.bold(`\n📖 HASIL KAMUS: "${hasil.kataDasar}"`));
+        console.log(chalk.white(`Arti Indonesia : ${chalk.yellow.bold(hasil.artiIndonesia.join(', '))}`));
+        console.log(chalk.white(`Kelas Kata     : ${chalk.cyan(hasil.kelasKata)} (Kategori: ${hasil.kategori})`));
+        console.log(chalk.white('\n--- ONDHAGGHA BHASA (TINGKATAN TUTUR) ---'));
+        console.log(`• Enja'-Iya (Akrab/Santai)   : ${chalk.green.bold(hasil.tingkatan.enjaIya)}`);
+        if (hasil.tingkatan.engghiEnten) {
+          console.log(`• Engghi-Enten (Sopan/Sedang): ${chalk.yellow.bold(hasil.tingkatan.engghiEnten)}`);
+        }
+        if (hasil.tingkatan.engghiBhunten) {
+          console.log(`• Engghi-Bhunten (Halus/Krama): ${chalk.magenta.bold(hasil.tingkatan.engghiBhunten)}`);
+        }
+
+        if (hasil.contohKalimat) {
+          console.log(chalk.white('\n--- CONTOH KALIMAT ---'));
+          console.log(chalk.cyan(`Madura    : "${hasil.contohKalimat.madura}"`));
+          console.log(chalk.gray(`Indonesia : "${hasil.contohKalimat.indonesia}"`));
+        }
+        console.log('');
+      } catch (err: any) {
+        console.error(chalk.red(err.message || err));
+      }
+    });
+
+  // Command: terjemah
+  program
+    .command('terjemah <teks>')
+    .description('Terjemahkan kalimat Indonesia ke Madura')
+    .option('-t, --tingkat <tingkat>', 'Tingkat bahasa: santai (enja-iya), sopan (engghi-enten), halus (engghi-bhunten)', 'santai')
+    .action(async (teks: string, options: { tingkat?: string }) => {
+      try {
+        const { terjemahKaMadura } = await import('../stdlib/kamus/index.js');
+        let level: any = 'enja-iya';
+        if (options.tingkat === 'halus' || options.tingkat === 'engghi-bhunten') {
+          level = 'engghi-bhunten';
+        } else if (options.tingkat === 'sopan' || options.tingkat === 'engghi-enten') {
+          level = 'engghi-enten';
+        }
+
+        const hasil = terjemahKaMadura(teks, level);
+        console.log(chalk.red.bold('\n=== PENERJEMAH BAHASA MADURA ==='));
+        console.log(chalk.gray(`Input     : "${teks}"`));
+        console.log(chalk.gray(`Tingkatan : ${level}`));
+        console.log(chalk.green.bold(`Hasil     : "${hasil}"\n`));
+      } catch (err: any) {
+        console.error(chalk.red(err.message || err));
+      }
+    });
+
   // Command: repl
   program
     .command('repl')

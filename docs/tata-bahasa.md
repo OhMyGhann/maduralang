@@ -259,4 +259,39 @@ sango gili = getKecamatan("Gili Iyang");
 > **Dukungan JavaScript Biasa**: Modul ini juga bisa di-import langsung di proyek Node.js / JavaScript biasa via:
 > `import { daftarKecamatan, cariWilayah } from '@ohmyghann/maduralang/wilayah';`
 
+---
+
+## 14. Pustaka Standar Kamus & Penerjemah Dwibahasa (`madura/kamus`)
+
+MaduraLang dilengkapi dengan kamus dwibahasa komprehensif yang memahami **Ondhaggha Bhasa (Tingkatan Tutur Bahasa Madura)**:
+* `enja-iya` (Akrab/Santai)
+* `engghi-enten` (Tengahan/Sopan)
+* `engghi-bhunten` (Halus/Krama Inggil)
+
+```mdr
+ngala' { cariKata, terjemahKaMadura, terjemahKaIndonesia, ubahTingkat, parbhasan } dhari "madura/kamus";
+
+// 1. Cari tingkatan kata
+sango kata = cariKata("makan");
+kocaaghi(kata.tingkatan.enjaIya);      // "ngakan"
+kocaaghi(kata.tingkatan.engghiBhunten); // "dha'ar"
+
+// 2. Terjemahkan kalimat Indonesia -> Madura
+sango santai = terjemahKaMadura("saya makan sate", "enja-iya");
+sango halus  = terjemahKaMadura("saya makan sate", "engghi-bhunten");
+kocaaghi(santai); // "engkok ngakan sate"
+kocaaghi(halus);  // "abdhina dha'ar sate"
+
+// 3. Konversi tingkatan kata otomatis
+sango kataHalus = ubahTingkat("ngakan", "engghi-bhunten"); // "dha'ar"
+
+// 4. Peribahasa Filosofis Madura (Parbhasan)
+sango pepatah = parbhasan(bhender); // Ambil peribahasa acak
+kocaaghi(`${pepatah.teks} : ${pepatah.maknaFilosofis}`);
+```
+
+> **Dukungan JavaScript Biasa**: Modul ini juga bisa di-import langsung di proyek Node.js / JavaScript biasa via:
+> `import { terjemahKaMadura, cariKata, ubahTingkat } from '@ohmyghann/maduralang/kamus';`
+
+
 

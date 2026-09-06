@@ -24,6 +24,18 @@ export {
   ringkasanStatistik,
   SEMUA_DESA_MADURA
 } from './stdlib/wilayah/index.js';
+export * as kamus from './stdlib/kamus/index.js';
+export {
+  terjemahKaMadura,
+  terjemahKaIndonesia,
+  cariKata,
+  ubahTingkat,
+  daftarKosakata,
+  parbhasan,
+  ringkasanKamus,
+  KOSAKATA_MADURA,
+  PARBHASAN_MADURA
+} from './stdlib/kamus/index.js';
 
 /**
  * Transpile kode MaduraLang (.mdr) menjadi JavaScript.
@@ -55,9 +67,11 @@ export async function run(source: string, extraContext: Record<string, any> = {}
 
     const runtimeUrl = pathToFileURL(path.resolve(__dirname, './stdlib/runtime.js')).href;
     const wilayahUrl = pathToFileURL(path.resolve(__dirname, './stdlib/wilayah/index.js')).href;
+    const kamusUrl = pathToFileURL(path.resolve(__dirname, './stdlib/kamus/index.js')).href;
 
     let transformed = jsCode
       .replace(/['"]@ohmyghann\/maduralang\/wilayah['"]/g, `'${wilayahUrl}'`)
+      .replace(/['"]@ohmyghann\/maduralang\/kamus['"]/g, `'${kamusUrl}'`)
       .replace(/['"]@ohmyghann\/maduralang\/stdlib['"]/g, `'${runtimeUrl}'`);
 
     const tempFile = path.join(os.tmpdir(), `mdr-${Date.now()}-${Math.random().toString(36).slice(2)}.mjs`);

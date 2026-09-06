@@ -14,6 +14,10 @@
       "import": "./dist/stdlib/wilayah/index.js",
       "types": "./dist/stdlib/wilayah/index.d.ts"
     },
+    "./kamus": {
+      "import": "./dist/stdlib/kamus/index.js",
+      "types": "./dist/stdlib/kamus/index.d.ts"
+    },
     "./stdlib": {
       "import": "./dist/stdlib/index.js",
       "types": "./dist/stdlib/index.d.ts"

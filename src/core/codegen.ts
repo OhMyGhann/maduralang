@@ -196,6 +196,8 @@ export class CodeGenerator {
     let source = stmt.source;
     if (source === 'madura/wilayah') {
       source = '@ohmyghann/maduralang/wilayah';
+    } else if (source === 'madura/kamus') {
+      source = '@ohmyghann/maduralang/kamus';
     } else if (source === 'madura/stdlib' || source === 'madura') {
       source = '@ohmyghann/maduralang/stdlib';
     }
