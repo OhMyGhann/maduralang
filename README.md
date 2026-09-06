@@ -6,14 +6,16 @@
 
 ### *Salam Settong Dhere! Bahasa Pemrograman Khas Madura.*
 
+[![npm version](https://img.shields.io/npm/v/@ohmyghann/maduralang.svg?color=cb3837)](https://www.npmjs.com/package/@ohmyghann/maduralang)
+[![Playground](https://img.shields.io/badge/Playground-Live-brightgreen)](https://ohmyghann.github.io/maduralang/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg)](https://nodejs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.5-blue.svg)](https://www.typescriptlang.org/)
-[![Tests](https://img.shields.io/badge/tests-19%20passed-brightgreen.svg)]()
+[![Tests](https://img.shields.io/badge/tests-27%20passed-brightgreen.svg)]()
 
-**MaduraLang** adalah bahasa pemrograman esoterik (*recreational language*) modern dengan sintaksis berbasis kosa kata bahasa Madura. Dilengkapi paritas fitur ala JavaScript modern seperti **Object-Oriented Programming (Class/OOP)**, **Async/Await**, **Arrow Functions**, **Template Literals**, **Module System**, dan **Switch-Case**. MaduraLang di-transpile langsung ke JavaScript modern sehingga cepat, modular, dan dapat dijalankan di mana saja (Node.js & browser).
+**MaduraLang** adalah bahasa pemrograman esoterik (*recreational language*) modern dengan sintaksis berbasis kosa kata bahasa Madura. Dilengkapi paritas fitur ala JavaScript modern seperti **Object-Oriented Programming (Class/OOP)**, **Async/Await**, **Arrow Functions**, **Template Literals**, **Module System**, dan **Switch-Case**, serta pustaka bawaan resmi data wilayah Madura (**`madura/wilayah`**).
 
-[Web Playground](playground/index.html) • [Tata Bahasa](docs/tata-bahasa.md) • [Contoh Kode](examples/) • [Ekstensi VS Code](vscode-extension/) • [Kontribusi](CONTRIBUTING.md)
+[🚀 Buka Web Playground](https://ohmyghann.github.io/maduralang/) • [📖 Tata Bahasa](docs/tata-bahasa.md) • [💡 Contoh Kode](examples/) • [📦 Paket NPM](https://www.npmjs.com/package/@ohmyghann/maduralang) • [🧩 Ekstensi VS Code](vscode-extension/)
 
 </div>
 
@@ -81,6 +83,44 @@ node dist/program.js
 madura repl
 # atau cukup:
 madura
+```
+
+#### Cek Data Wilayah Madura Langsung di Terminal
+```bash
+# Lihat ringkasan 4 kabupaten & 72 kecamatan
+madura wilayah
+
+# Cari kecamatan, kabupaten, atau kode pos
+madura wilayah pamekasan
+madura wilayah "gili iyang"
+madura wilayah 69363
+```
+
+---
+
+## 🗺️ Pustaka Standar Wilayah Madura (`madura/wilayah`)
+
+MaduraLang dilengkapi dengan **pustaka bawaan resmi data geografis 4 Kabupaten dan 72 Kecamatan di Madura**:
+
+### 1. Digunakan di MaduraLang (`.mdr`):
+```mdr
+ngala' { daftarKabupaten, daftarKecamatan, cariWilayah } dhari "madura/wilayah";
+
+// Ambil seluruh kecamatan di Pamekasan
+sango kec = daftarKecamatan("Pamekasan");
+
+// Cari pintar (desa, kecamatan, kode pos, atau pulau)
+sango hasil = cariWilayah("Api Tak Kunjung Padam");
+kocaaghi(hasil[0].info);
+```
+
+### 2. Digunakan di JavaScript / TypeScript Biasa:
+Programmer yang membuat website React, Vue, Express, atau Node.js biasa juga bisa langsung mengimpor data wilayah Madura ini tanpa menulis kode MaduraLang:
+```javascript
+import { daftarKecamatan, cariWilayah, ringkasanStatistik } from '@ohmyghann/maduralang/wilayah';
+
+console.log(daftarKecamatan('Pamekasan'));
+console.log(cariWilayah('69363')); // Cari berdasarkan Kode Pos
 ```
 
 ---

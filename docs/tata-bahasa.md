@@ -235,3 +235,28 @@ baghi lakona info() {
 }
 ```
 
+---
+
+## 13. Pustaka Standar Wilayah Madura (`madura/wilayah`)
+
+MaduraLang menyediakan pustaka bawaan resmi yang memuat data geografis lengkap **4 Kabupaten** (Bangkalan, Sampang, Pamekasan, Sumenep) dan **72 Kecamatan**, data kode pos, koordinat, dan kepulauan:
+
+```mdr
+ngala' { daftarKabupaten, daftarKecamatan, getKecamatan, cariWilayah, ringkasanStatistik } dhari "madura/wilayah";
+
+// Ambil statistik Madura
+sango stats = ringkasanStatistik();
+kocaaghi(`Total Kecamatan: ${stats.totalKecamatan}`);
+
+// Ambil seluruh kecamatan di Pamekasan
+sango kec = daftarKecamatan("Pamekasan");
+
+// Cari cerdas (berdasarkan nama desa, kecamatan, kode pos, atau pulau)
+sango hasil = cariWilayah("Api Tak Kunjung Padam");
+sango gili = getKecamatan("Gili Iyang");
+```
+
+> **Dukungan JavaScript Biasa**: Modul ini juga bisa di-import langsung di proyek Node.js / JavaScript biasa via:
+> `import { daftarKecamatan, cariWilayah } from '@ohmyghann/maduralang/wilayah';`
+
+

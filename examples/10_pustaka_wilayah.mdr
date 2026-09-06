@@ -1,0 +1,62 @@
+// ==========================================================
+// 10. Pustaka Standar Wilayah Madura (madura/wilayah)
+// Mendemonstrasikan akses data 4 Kabupaten & 72 Kecamatan
+// ==========================================================
+
+ngala' { daftarKabupaten, daftarKecamatan, getKecamatan, cariWilayah, ringkasanStatistik } dhari "madura/wilayah";
+
+kocaaghi("==================================================");
+kocaaghi("   PUSTAKA WILAYAH MADURA (madura/wilayah)        ");
+kocaaghi("   Dibuat oleh OhMyGhann kaangghuy MaduraLang     ");
+kocaaghi("==================================================");
+
+// 1. Ringkasan Statistik
+sango stats = ringkasanStatistik();
+kocaaghi(`Total Kabupaten : ${stats.totalKabupaten}`);
+kocaaghi(`Total Kecamatan : ${stats.totalKecamatan} Kecamatan`);
+kocaaghi(`Total Luas      : ${stats.totalLuasKm2} km²\n`);
+
+// 2. Daftar 4 Kabupaten
+kocaaghi("--- DAFTAR KABUPATEN NENG MADURA ---");
+sango kabList = daftarKabupaten();
+sango i = 0;
+sampek (i < kabList.length) {
+  sango k = kabList[i];
+  kocaaghi(`${i + 1}. ${k.namaLengkap} - "${k.julukan}" (${k.jumlahKecamatan} Kecamatan)`);
+  i++;
+}
+
+// 3. Ambil Kecamatan di Kabupaten Pamekasan
+kocaaghi("\n--- KECAMATAN NENG PAMEKASAN (BUMI SAKERA) ---");
+sango kecPamekasan = daftarKecamatan("Pamekasan");
+sango j = 0;
+sampek (j < kecPamekasan.length) {
+  sango kec = kecPamekasan[j];
+  kocaaghi(`• Kec. ${kec.nama} (Kode Pos: ${kec.kodePos}) - Ikon: ${kec.destinasiIkonik}`);
+  j++;
+}
+
+// 4. Cari Tempat Bersejarah / Wisata
+kocaaghi("\n--- PENCARIAN CERDAS WILAYAH ---");
+sango hasilCari = cariWilayah("Api Tak Kunjung Padam");
+sango m = 0;
+sampek (m < hasilCari.length) {
+  sango res = hasilCari[m];
+  kocaaghi(`Hasil: [${res.tipe}] ${res.nama} (${res.kabupaten})`);
+  kocaaghi(`Info : ${res.info}`);
+  m++;
+}
+
+// 5. Cek Kecamatan Kepulauan Sumenep (Gili Iyang)
+kocaaghi("\n--- KEPULAUAN SUMENEP: PULAU OKSIGEN ---");
+sango gili = getKecamatan("Gili Iyang");
+lamon (gili) {
+  kocaaghi(`Nama: Kecamatan ${gili.nama}`);
+  kocaaghi(`Kabupaten: ${gili.kabupaten}`);
+  kocaaghi(`Ikon: ${gili.destinasiIkonik}`);
+  kocaaghi(`Koordinat: ${gili.koordinat.lat}, ${gili.koordinat.lng}`);
+}
+
+kocaaghi("\n==================================================");
+kocaaghi(" Mator sakalangkong! Salam settong dhere! ");
+kocaaghi("==================================================");

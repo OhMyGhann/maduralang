@@ -79,6 +79,49 @@ export function createCli(): Command {
       }
     });
 
+  // Command: wilayah
+  program
+    .command('wilayah [query]')
+    .description('Cari informasi wilayah 4 Kabupaten di Madura (Kecamatan, Kode Pos, Kepulauan)')
+    .action(async (query?: string) => {
+      try {
+        const { cariWilayah, daftarKabupaten, getKabupaten, ringkasanStatistik } = await import('../stdlib/wilayah/index.js');
+        
+        if (!query) {
+          const stats = ringkasanStatistik();
+          console.log(chalk.red.bold('\n=== DATA GEOGRAFIS PULAU MADURA ==='));
+          console.log(chalk.white(`Provinsi       : ${stats.provinsi}`));
+          console.log(chalk.white(`Total Kabupaten: ${chalk.yellow.bold(stats.totalKabupaten)} (Bangkalan, Sampang, Pamekasan, Sumenep)`));
+          console.log(chalk.white(`Total Kecamatan: ${chalk.yellow.bold(stats.totalKecamatan)} Kecamatan`));
+          console.log(chalk.white(`Total Luas     : ${stats.totalLuasKm2} km²`));
+          console.log(chalk.gray('Gunakan: madura wilayah <nama_kecamatan / kode_pos / kabupaten>\n'));
+
+          console.log(chalk.cyan.bold('DAFTAR KABUPATEN:'));
+          for (const kab of daftarKabupaten()) {
+            console.log(`- ${chalk.yellow.bold(kab.nama)} (${kab.namaLengkap}): ${chalk.gray(kab.julukan)} [${kab.jumlahKecamatan} Kecamatan]`);
+          }
+          console.log('');
+          return;
+        }
+
+        const hasil = cariWilayah(query);
+        if (hasil.length === 0) {
+          console.log(chalk.yellow(`\n[!] Ta' nemmo data wilayah kaangghuy: "${query}"`));
+          return;
+        }
+
+        console.log(chalk.green.bold(`\nMenemukan ${hasil.length} data wilayah untuk "${query}":\n`));
+        for (const item of hasil) {
+          const tag = chalk.bgRed.white.bold(` ${item.tipe} `);
+          console.log(`${tag} ${chalk.bold.yellow(item.nama)} - ${chalk.cyan(item.kabupaten)}`);
+          console.log(`    ${chalk.white(item.info)}`);
+          console.log(`    ${chalk.gray(`Koordinat: ${item.koordinat.lat}, ${item.koordinat.lng}`)}\n`);
+        }
+      } catch (err: any) {
+        console.error(chalk.red(err.message || err));
+      }
+    });
+
   // Command: repl
   program
     .command('repl')

@@ -192,7 +192,15 @@ export class CodeGenerator {
         .join(', ');
       parts.push(`{ ${specList} }`);
     }
-    return `${this.indent()}import ${parts.join(', ')} from ${JSON.stringify(stmt.source)};`;
+
+    let source = stmt.source;
+    if (source === 'madura/wilayah') {
+      source = '@ohmyghann/maduralang/wilayah';
+    } else if (source === 'madura/stdlib' || source === 'madura') {
+      source = '@ohmyghann/maduralang/stdlib';
+    }
+
+    return `${this.indent()}import ${parts.join(', ')} from ${JSON.stringify(source)};`;
   }
 
   private generateExportDeclaration(stmt: ExportDeclaration): string {

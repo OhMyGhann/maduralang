@@ -5,6 +5,20 @@
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./wilayah": {
+      "import": "./dist/stdlib/wilayah/index.js",
+      "types": "./dist/stdlib/wilayah/index.d.ts"
+    },
+    "./stdlib": {
+      "import": "./dist/stdlib/index.js",
+      "types": "./dist/stdlib/index.d.ts"
+    }
+  },
   "bin": {
     "madura": "bin/madura.js",
     "mdr": "bin/madura.js"
