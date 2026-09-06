@@ -181,7 +181,10 @@ export const KOSAKATA_MADURA: EntriKamus[] = [
     "artiIndonesia": [
       "saudara",
       "kawan",
-      "kerabat"
+      "kerabat",
+      "saudaraku",
+      "saudaranya",
+      "temanku"
     ],
     "kelasKata": "nomina",
     "kategori": "sosial",
@@ -240,7 +243,9 @@ export const KOSAKATA_MADURA: EntriKamus[] = [
     "artiIndonesia": [
       "ayah",
       "bapak",
-      "papa"
+      "papa",
+      "bapakku",
+      "ayahku"
     ],
     "kelasKata": "nomina",
     "kategori": "keluarga",
@@ -260,7 +265,9 @@ export const KOSAKATA_MADURA: EntriKamus[] = [
     "artiIndonesia": [
       "ibu",
       "mama",
-      "emak"
+      "emak",
+      "ibuku",
+      "mamaku"
     ],
     "kelasKata": "nomina",
     "kategori": "keluarga",
@@ -1791,7 +1798,8 @@ export const KOSAKATA_MADURA: EntriKamus[] = [
     "id": "verb-duduk",
     "kataDasar": "toju'",
     "artiIndonesia": [
-      "duduk"
+      "duduk",
+      "terduduk"
     ],
     "kelasKata": "verba",
     "kategori": "gerakan",
@@ -1829,7 +1837,8 @@ export const KOSAKATA_MADURA: EntriKamus[] = [
     "kataDasar": "tedhung",
     "artiIndonesia": [
       "tidur",
-      "berbaring"
+      "berbaring",
+      "tertidur"
     ],
     "kelasKata": "verba",
     "kategori": "gerakan",
@@ -1848,7 +1857,8 @@ export const KOSAKATA_MADURA: EntriKamus[] = [
     "kataDasar": "jhagha",
     "artiIndonesia": [
       "bangun",
-      "terjaga"
+      "terjaga",
+      "terbangun"
     ],
     "kelasKata": "verba",
     "kategori": "gerakan",
@@ -1867,7 +1877,8 @@ export const KOSAKATA_MADURA: EntriKamus[] = [
     "kataDasar": "labu",
     "artiIndonesia": [
       "jatuh",
-      "terjatuh"
+      "terjatuh",
+      "tumbang"
     ],
     "kelasKata": "verba",
     "kategori": "gerakan",
@@ -1962,7 +1973,8 @@ export const KOSAKATA_MADURA: EntriKamus[] = [
     "artiIndonesia": [
       "datang",
       "tiba",
-      "sampai"
+      "sampai",
+      "hadir"
     ],
     "kelasKata": "verba",
     "kategori": "gerakan",
@@ -1980,7 +1992,8 @@ export const KOSAKATA_MADURA: EntriKamus[] = [
     "id": "verb-masuk",
     "kataDasar": "maso'",
     "artiIndonesia": [
-      "masuk"
+      "masuk",
+      "memasuki"
     ],
     "kelasKata": "verba",
     "kategori": "gerakan",
@@ -1999,7 +2012,8 @@ export const KOSAKATA_MADURA: EntriKamus[] = [
     "kataDasar": "kalowar",
     "artiIndonesia": [
       "keluar",
-      "menjauh"
+      "menjauh",
+      "meninggalkan"
     ],
     "kelasKata": "verba",
     "kategori": "gerakan",
@@ -2018,7 +2032,9 @@ export const KOSAKATA_MADURA: EntriKamus[] = [
     "kataDasar": "kakan",
     "artiIndonesia": [
       "makan",
-      "menyantap"
+      "menyantap",
+      "memakan",
+      "santap"
     ],
     "kelasKata": "verba",
     "kategori": "aktivitas",
@@ -2037,7 +2053,8 @@ export const KOSAKATA_MADURA: EntriKamus[] = [
     "kataDasar": "enom",
     "artiIndonesia": [
       "minum",
-      "meneguk"
+      "meneguk",
+      "meminum"
     ],
     "kelasKata": "verba",
     "kategori": "aktivitas",
@@ -2190,7 +2207,8 @@ export const KOSAKATA_MADURA: EntriKamus[] = [
     "kataDasar": "toles",
     "artiIndonesia": [
       "tulis",
-      "menulis"
+      "menulis",
+      "mencatat"
     ],
     "kelasKata": "verba",
     "kategori": "edukasi",
@@ -2342,7 +2360,8 @@ export const KOSAKATA_MADURA: EntriKamus[] = [
     "kataDasar": "mokka'",
     "artiIndonesia": [
       "buka",
-      "membuka"
+      "membuka",
+      "terbuka"
     ],
     "kelasKata": "verba",
     "kategori": "aktivitas",
@@ -2361,7 +2380,8 @@ export const KOSAKATA_MADURA: EntriKamus[] = [
     "kataDasar": "notop",
     "artiIndonesia": [
       "tutup",
-      "menutup"
+      "menutup",
+      "tertutup"
     ],
     "kelasKata": "verba",
     "kategori": "aktivitas",
@@ -2513,7 +2533,8 @@ export const KOSAKATA_MADURA: EntriKamus[] = [
     "kataDasar": "temmo",
     "artiIndonesia": [
       "temu",
-      "menemukan"
+      "menemukan",
+      "bertemu"
     ],
     "kelasKata": "verba",
     "kategori": "aktivitas",
@@ -2573,7 +2594,10 @@ export const KOSAKATA_MADURA: EntriKamus[] = [
     "artiIndonesia": [
       "bicara",
       "berkata",
-      "ucap"
+      "ucap",
+      "berbicara",
+      "ngomong",
+      "berucap"
     ],
     "kelasKata": "verba",
     "kategori": "komunikasi",
@@ -2592,7 +2616,8 @@ export const KOSAKATA_MADURA: EntriKamus[] = [
     "kataDasar": "keding",
     "artiIndonesia": [
       "dengar",
-      "mendengar"
+      "mendengar",
+      "mendengarkan"
     ],
     "kelasKata": "verba",
     "kategori": "indera",
@@ -2611,7 +2636,10 @@ export const KOSAKATA_MADURA: EntriKamus[] = [
     "kataDasar": "kele",
     "artiIndonesia": [
       "lihat",
-      "melihat"
+      "melihat",
+      "memandang",
+      "menonton",
+      "nonton"
     ],
     "kelasKata": "verba",
     "kategori": "indera",
@@ -2857,7 +2885,8 @@ export const KOSAKATA_MADURA: EntriKamus[] = [
     "artiIndonesia": [
       "sedih",
       "susah",
-      "duka"
+      "duka",
+      "berduka"
     ],
     "kelasKata": "adjektiva",
     "kategori": "perasaan",
@@ -2914,7 +2943,8 @@ export const KOSAKATA_MADURA: EntriKamus[] = [
     "kataDasar": "duka",
     "artiIndonesia": [
       "marah",
-      "murka"
+      "murka",
+      "kesal"
     ],
     "kelasKata": "adjektiva",
     "kategori": "perasaan",
@@ -3153,22 +3183,23 @@ export const KOSAKATA_MADURA: EntriKamus[] = [
     }
   },
   {
-    "id": "adj-bersih",
+    "id": "med-sembuh",
     "kataDasar": "berres",
     "artiIndonesia": [
-      "bersih",
-      "suci"
+      "sembuh",
+      "pulih",
+      "waras"
     ],
     "kelasKata": "adjektiva",
-    "kategori": "kondisi",
+    "kategori": "kesehatan",
     "tingkatan": {
-      "enjaIya": "berres",
+      "enjaIya": "berres / waras",
       "engghiEnten": "berres",
-      "engghiBhunten": "resik"
+      "engghiBhunten": "dhangan"
     },
     "contohKalimat": {
-      "madura": "Aeng songay resik tor jhernek.",
-      "indonesia": "Air sungai bersih dan jernih."
+      "madura": "Ampon dhangan dhari songkanna.",
+      "indonesia": "Sudah sembuh dari sakitnya."
     }
   },
   {
@@ -3253,7 +3284,10 @@ export const KOSAKATA_MADURA: EntriKamus[] = [
     "artiIndonesia": [
       "baik",
       "bagus",
-      "elok"
+      "elok",
+      "indah",
+      "anggun",
+      "cantik"
     ],
     "kelasKata": "adjektiva",
     "kategori": "sifat",
@@ -4515,7 +4549,9 @@ export const KOSAKATA_MADURA: EntriKamus[] = [
     "artiIndonesia": [
       "teman",
       "sahabat",
-      "kawan"
+      "kawan",
+      "sahabatku",
+      "temanku"
     ],
     "kelasKata": "nomina",
     "kategori": "sosial",
@@ -6228,6 +6264,562 @@ export const KOSAKATA_MADURA: EntriKamus[] = [
     "contohKalimat": {
       "madura": "Moga salamet dunnya aherat.",
       "indonesia": "Semoga selamat sejahtera di dunia dan akhirat."
+    }
+  },
+  {
+    "id": "id-nama",
+    "kataDasar": "nyama",
+    "artiIndonesia": [
+      "nama",
+      "namaku",
+      "namamu",
+      "namanya",
+      "sebutan"
+    ],
+    "kelasKata": "nomina",
+    "kategori": "identitas",
+    "tingkatan": {
+      "enjaIya": "nyama",
+      "engghiEnten": "nyama",
+      "engghiBhunten": "asma"
+    },
+    "contohKalimat": {
+      "madura": "Asmana panjhenengngan pasera?",
+      "indonesia": "Nama Anda siapa?"
+    }
+  },
+  {
+    "id": "id-umur",
+    "kataDasar": "omor",
+    "artiIndonesia": [
+      "umur",
+      "usia"
+    ],
+    "kelasKata": "nomina",
+    "kategori": "identitas",
+    "tingkatan": {
+      "enjaIya": "omor",
+      "engghiEnten": "omor",
+      "engghiBhunten": "yuswa"
+    },
+    "contohKalimat": {
+      "madura": "Yuswana ampon sanga polo taon.",
+      "indonesia": "Usianya sudah sembilan puluh tahun."
+    }
+  },
+  {
+    "id": "id-asal",
+    "kataDasar": "asal",
+    "artiIndonesia": [
+      "asal",
+      "asal-usul",
+      "daerah asal"
+    ],
+    "kelasKata": "nomina",
+    "kategori": "identitas",
+    "tingkatan": {
+      "enjaIya": "asal",
+      "engghiEnten": "asal",
+      "engghiBhunten": "pinangka"
+    },
+    "contohKalimat": {
+      "madura": "Asal dhari Pamekasan Madura.",
+      "indonesia": "Asal dari Pamekasan Madura."
+    }
+  },
+  {
+    "id": "edu-sekolah",
+    "kataDasar": "sakola",
+    "artiIndonesia": [
+      "sekolah",
+      "madrasah"
+    ],
+    "kelasKata": "nomina",
+    "kategori": "edukasi",
+    "tingkatan": {
+      "enjaIya": "sakola",
+      "engghiEnten": "sakola",
+      "engghiBhunten": "sakola"
+    },
+    "contohKalimat": {
+      "madura": "Moret asakola neng madrasah.",
+      "indonesia": "Murid bersekolah di madrasah."
+    }
+  },
+  {
+    "id": "edu-murid",
+    "kataDasar": "moret",
+    "artiIndonesia": [
+      "murid",
+      "siswa",
+      "pelajar"
+    ],
+    "kelasKata": "nomina",
+    "kategori": "edukasi",
+    "tingkatan": {
+      "enjaIya": "moret",
+      "engghiEnten": "moret",
+      "engghiBhunten": "santre"
+    },
+    "contohKalimat": {
+      "madura": "Santre rajin maca kitab.",
+      "indonesia": "Murid santri rajin membaca kitab."
+    }
+  },
+  {
+    "id": "edu-guru",
+    "kataDasar": "guru",
+    "artiIndonesia": [
+      "guru",
+      "pengajar",
+      "ustadz",
+      "ustadzah"
+    ],
+    "kelasKata": "nomina",
+    "kategori": "edukasi",
+    "tingkatan": {
+      "enjaIya": "guru",
+      "engghiEnten": "guru",
+      "engghiBhunten": "guru seppo"
+    },
+    "contohKalimat": {
+      "madura": "Hormati bhuppa' bhabhu' ghuru rato.",
+      "indonesia": "Hormati ayah, ibu, guru, dan pemimpin."
+    }
+  },
+  {
+    "id": "edu-ajar",
+    "kataDasar": "ngajar",
+    "artiIndonesia": [
+      "mengajar",
+      "mengajari",
+      "mendidik"
+    ],
+    "kelasKata": "verba",
+    "kategori": "edukasi",
+    "tingkatan": {
+      "enjaIya": "ngajar",
+      "engghiEnten": "ngajar",
+      "engghiBhunten": "molang"
+    },
+    "contohKalimat": {
+      "madura": "Kyai molang santre ngaji.",
+      "indonesia": "Kyai mengajar santri mengaji."
+    }
+  },
+  {
+    "id": "edu-kitab",
+    "kataDasar": "kitab",
+    "artiIndonesia": [
+      "kitab",
+      "buku"
+    ],
+    "kelasKata": "nomina",
+    "kategori": "edukasi",
+    "tingkatan": {
+      "enjaIya": "kitab / buku",
+      "engghiEnten": "kitab",
+      "engghiBhunten": "seratan"
+    },
+    "contohKalimat": {
+      "madura": "Kitab koneng parlo e-baca.",
+      "indonesia": "Kitab kuning perlu dibaca."
+    }
+  },
+  {
+    "id": "loc-kota",
+    "kataDasar": "kotha",
+    "artiIndonesia": [
+      "kota",
+      "perkotaan"
+    ],
+    "kelasKata": "nomina",
+    "kategori": "tempat",
+    "tingkatan": {
+      "enjaIya": "kotha",
+      "engghiEnten": "kotha",
+      "engghiBhunten": "kotha"
+    },
+    "contohKalimat": {
+      "madura": "Kotha Pamekasan rame bhender.",
+      "indonesia": "Kota Pamekasan sangat ramai."
+    }
+  },
+  {
+    "id": "loc-desa",
+    "kataDasar": "dhisa",
+    "artiIndonesia": [
+      "desa",
+      "kampung",
+      "dusun"
+    ],
+    "kelasKata": "nomina",
+    "kategori": "tempat",
+    "tingkatan": {
+      "enjaIya": "dhisa / kampon",
+      "engghiEnten": "dhisa",
+      "engghiBhunten": "dhisa"
+    },
+    "contohKalimat": {
+      "madura": "Odhi' rukun neng dhisa.",
+      "indonesia": "Hidup rukun di pedesaan."
+    }
+  },
+  {
+    "id": "loc-masjid",
+    "kataDasar": "masghit",
+    "artiIndonesia": [
+      "masjid",
+      "mushalla",
+      "surau"
+    ],
+    "kelasKata": "nomina",
+    "kategori": "tempat",
+    "tingkatan": {
+      "enjaIya": "masghit",
+      "engghiEnten": "masghit",
+      "engghiBhunten": "masjid"
+    },
+    "contohKalimat": {
+      "madura": "Asolat neng masghit agung.",
+      "indonesia": "Shalat di masjid agung."
+    }
+  },
+  {
+    "id": "loc-langgar",
+    "kataDasar": "langghar",
+    "artiIndonesia": [
+      "langgar",
+      "surau"
+    ],
+    "kelasKata": "nomina",
+    "kategori": "tempat",
+    "tingkatan": {
+      "enjaIya": "langghar",
+      "engghiEnten": "langghar",
+      "engghiBhunten": "langghar"
+    },
+    "contohKalimat": {
+      "madura": "Ngaji neng langghar tiap sore.",
+      "indonesia": "Mengaji di langgar setiap sore."
+    }
+  },
+  {
+    "id": "loc-pesantren",
+    "kataDasar": "pondhok",
+    "artiIndonesia": [
+      "pondok",
+      "pesantren",
+      "pondok pesantren"
+    ],
+    "kelasKata": "nomina",
+    "kategori": "tempat",
+    "tingkatan": {
+      "enjaIya": "pondhok",
+      "engghiEnten": "pondhok",
+      "engghiBhunten": "pesantren"
+    },
+    "contohKalimat": {
+      "madura": "Pondhok pesantren banya' neng Madura.",
+      "indonesia": "Pondok pesantren banyak di Madura."
+    }
+  },
+  {
+    "id": "tra-mobil",
+    "kataDasar": "montor",
+    "artiIndonesia": [
+      "mobil",
+      "kendaraan",
+      "roda empat"
+    ],
+    "kelasKata": "nomina",
+    "kategori": "transportasi",
+    "tingkatan": {
+      "enjaIya": "montor",
+      "engghiEnten": "montor",
+      "engghiBhunten": "tunggangan"
+    },
+    "contohKalimat": {
+      "madura": "Nompang montor ka Sorbhaja.",
+      "indonesia": "Naik mobil ke Surabaya."
+    }
+  },
+  {
+    "id": "tra-motor",
+    "kataDasar": "sepedha",
+    "artiIndonesia": [
+      "motor",
+      "sepeda",
+      "sepeda motor"
+    ],
+    "kelasKata": "nomina",
+    "kategori": "transportasi",
+    "tingkatan": {
+      "enjaIya": "sepedha motor",
+      "engghiEnten": "sepedha",
+      "engghiBhunten": "tunggangan"
+    },
+    "contohKalimat": {
+      "madura": "Nompang sepedha motor ka pasar.",
+      "indonesia": "Naik sepeda motor ke pasar."
+    }
+  },
+  {
+    "id": "tra-kapal",
+    "kataDasar": "kapal",
+    "artiIndonesia": [
+      "kapal",
+      "kapal laut"
+    ],
+    "kelasKata": "nomina",
+    "kategori": "transportasi",
+    "tingkatan": {
+      "enjaIya": "kapal",
+      "engghiEnten": "kapal",
+      "engghiBhunten": "baita rajhe"
+    },
+    "contohKalimat": {
+      "madura": "Kapal feri penyeberangan Kamal.",
+      "indonesia": "Kapal feri penyeberangan Kamal."
+    }
+  },
+  {
+    "id": "med-obat",
+    "kataDasar": "jhamu",
+    "artiIndonesia": [
+      "obat",
+      "ramuan",
+      "jamu",
+      "tamba"
+    ],
+    "kelasKata": "nomina",
+    "kategori": "kesehatan",
+    "tingkatan": {
+      "enjaIya": "jhamu / tamba",
+      "engghiEnten": "jhamu",
+      "engghiBhunten": "landhu"
+    },
+    "contohKalimat": {
+      "madura": "Ngunjhut landhu makle lekas berres.",
+      "indonesia": "Minum obat agar cepat sembuh."
+    }
+  },
+  {
+    "id": "med-dokter",
+    "kataDasar": "dokter",
+    "artiIndonesia": [
+      "dokter",
+      "mantri",
+      "tabib"
+    ],
+    "kelasKata": "nomina",
+    "kategori": "profesi",
+    "tingkatan": {
+      "enjaIya": "dokter",
+      "engghiEnten": "dokter",
+      "engghiBhunten": "mantri"
+    },
+    "contohKalimat": {
+      "madura": "Pariksa ka dokter neng poskesmas.",
+      "indonesia": "Periksa ke dokter di puskesmas."
+    }
+  },
+  {
+    "id": "sky-terbit",
+    "kataDasar": "mencar",
+    "artiIndonesia": [
+      "terbit",
+      "muncul",
+      "terbit matahari"
+    ],
+    "kelasKata": "verba",
+    "kategori": "alam",
+    "tingkatan": {
+      "enjaIya": "mencar",
+      "engghiEnten": "mencar",
+      "engghiBhunten": "onggha"
+    },
+    "contohKalimat": {
+      "madura": "Are mencar dhari temor.",
+      "indonesia": "Matahari terbit dari timur."
+    }
+  },
+  {
+    "id": "sky-terbenam",
+    "kataDasar": "serep",
+    "artiIndonesia": [
+      "terbenam",
+      "tenggelam"
+    ],
+    "kelasKata": "verba",
+    "kategori": "alam",
+    "tingkatan": {
+      "enjaIya": "serep / talebbu'",
+      "engghiEnten": "serep",
+      "engghiBhunten": "serep"
+    },
+    "contohKalimat": {
+      "madura": "Are serep neng bara'.",
+      "indonesia": "Matahari terbenam di barat."
+    }
+  },
+  {
+    "id": "sky-deras",
+    "kataDasar": "derres",
+    "artiIndonesia": [
+      "deras",
+      "lebat"
+    ],
+    "kelasKata": "adjektiva",
+    "kategori": "cuaca",
+    "tingkatan": {
+      "enjaIya": "derres",
+      "engghiEnten": "derres",
+      "engghiBhunten": "ageng"
+    },
+    "contohKalimat": {
+      "madura": "Ojan derres marateng berkah.",
+      "indonesia": "Hujan deras mendatangkan berkah."
+    }
+  },
+  {
+    "id": "sky-awan",
+    "kataDasar": "ombon",
+    "artiIndonesia": [
+      "awan",
+      "mega",
+      "mendung"
+    ],
+    "kelasKata": "nomina",
+    "kategori": "cuaca",
+    "tingkatan": {
+      "enjaIya": "ombon / mendhong",
+      "engghiEnten": "ombon",
+      "engghiBhunten": "ombon"
+    },
+    "contohKalimat": {
+      "madura": "Ombon pote neng langnge'.",
+      "indonesia": "Awan putih di langit."
+    }
+  },
+  {
+    "id": "adj-sepi",
+    "kataDasar": "seppe",
+    "artiIndonesia": [
+      "sepi",
+      "sunyi",
+      "senyap"
+    ],
+    "kelasKata": "adjektiva",
+    "kategori": "kondisi",
+    "tingkatan": {
+      "enjaIya": "seppe",
+      "engghiEnten": "seppe",
+      "engghiBhunten": "seppe"
+    },
+    "contohKalimat": {
+      "madura": "Malem seppe ta' kedingan swara.",
+      "indonesia": "Malam sunyi tiada terdengar suara."
+    }
+  },
+  {
+    "id": "adj-ramai",
+    "kataDasar": "rame",
+    "artiIndonesia": [
+      "ramai",
+      "meriah"
+    ],
+    "kelasKata": "adjektiva",
+    "kategori": "kondisi",
+    "tingkatan": {
+      "enjaIya": "rame",
+      "engghiEnten": "rame",
+      "engghiBhunten": "rame"
+    },
+    "contohKalimat": {
+      "madura": "Pasar Pamekasan ce' ramena.",
+      "indonesia": "Pasar Pamekasan sangat ramai."
+    }
+  },
+  {
+    "id": "act-mulai",
+    "kataDasar": "molae",
+    "artiIndonesia": [
+      "mulai",
+      "memulai",
+      "berawal"
+    ],
+    "kelasKata": "verba",
+    "kategori": "aktivitas",
+    "tingkatan": {
+      "enjaIya": "molae",
+      "engghiEnten": "molae",
+      "engghiBhunten": "kawitan"
+    },
+    "contohKalimat": {
+      "madura": "Ngireng molae kalaban bismillah.",
+      "indonesia": "Mari kita mulai dengan bismillah."
+    }
+  },
+  {
+    "id": "act-berhenti",
+    "kataDasar": "ambhu",
+    "artiIndonesia": [
+      "berhenti",
+      "setop",
+      "jeda"
+    ],
+    "kelasKata": "verba",
+    "kategori": "aktivitas",
+    "tingkatan": {
+      "enjaIya": "ambhu",
+      "engghiEnten": "kendel",
+      "engghiBhunten": "kendel"
+    },
+    "contohKalimat": {
+      "madura": "Ambhu sabellunna ojan derres.",
+      "indonesia": "Berhenti berteduh sebelum hujan lebat."
+    }
+  },
+  {
+    "id": "soc-tolong",
+    "kataDasar": "banto",
+    "artiIndonesia": [
+      "tolong",
+      "menolong",
+      "membantu",
+      "bantuan"
+    ],
+    "kelasKata": "verba",
+    "kategori": "sosial",
+    "tingkatan": {
+      "enjaIya": "banto",
+      "engghiEnten": "abanto",
+      "engghiBhunten": "nyombheng"
+    },
+    "contohKalimat": {
+      "madura": "Abanto taretan se mardhika.",
+      "indonesia": "Membantu saudara yang membutuhkan."
+    }
+  },
+  {
+    "id": "soc-kabar",
+    "kataDasar": "kabar",
+    "artiIndonesia": [
+      "kabar",
+      "berita",
+      "warta"
+    ],
+    "kelasKata": "nomina",
+    "kategori": "komunikasi",
+    "tingkatan": {
+      "enjaIya": "kabar",
+      "engghiEnten": "kabar",
+      "engghiBhunten": "kabhisaan"
+    },
+    "contohKalimat": {
+      "madura": "Ponapa kabhisaan taretan sadaja?",
+      "indonesia": "Bagaimanakah kabar saudara sekalian?"
     }
   }
 ];
