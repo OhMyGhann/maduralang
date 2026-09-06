@@ -101,7 +101,7 @@ export class Lexer {
     while (!this.isAtEnd()) {
       const char = this.peek();
 
-      if (char === ' ' || char === '\r' || char === '\t') {
+      if (char === ' ' || char === '\r' || char === '\t' || char === '\uFEFF') {
         this.advance();
         continue;
       }

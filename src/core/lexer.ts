@@ -15,8 +15,8 @@ export class Lexer {
     while (!this.isAtEnd()) {
       const char = this.peek();
 
-      // Whitespace
-      if (char === ' ' || char === '\r' || char === '\t') {
+      // Whitespace and BOM
+      if (char === ' ' || char === '\r' || char === '\t' || char === '\uFEFF') {
         this.advance();
         continue;
       }
