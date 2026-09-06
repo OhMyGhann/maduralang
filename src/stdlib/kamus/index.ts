@@ -28,53 +28,80 @@ export function cariKata(kata: string): EntriKamus | undefined {
 }
 
 /**
- * Menerjemahkan kata atau kalimat pendek dari Bahasa Indonesia ke Bahasa Madura
- * Mendukung pilihan tingkatan tutur:
- * - 'enja-iya' (default: santai/akrab)
- * - 'engghi-enten' (sopan/tengahan)
+ * Menerjemahkan teks dari Bahasa Indonesia ke Bahasa Madura
+ * Mendukung 3 tingkatan tutur (Ondhaggha Bhasa):
+ * - 'enja-iya' (santai/akrab - default)
+ * - 'engghi-enten' (sopan/sedang)
  * - 'engghi-bhunten' (halus/krama inggil)
  */
 export function terjemahKaMadura(teksIndonesia: string, tingkat: TingkatBhasa = 'enja-iya'): string {
   if (!teksIndonesia || !teksIndonesia.trim()) return '';
 
-  const clean = teksIndonesia.toLowerCase().trim();
+  let text = teksIndonesia.trim();
 
-  // 1. Cek kecocokan langsung seluruh frasa (misal: "terima kasih", "tidak ada")
-  const exactPhrase = KOSAKATA_MADURA.find(k =>
-    k.artiIndonesia.some(arti => arti.toLowerCase() === clean)
-  );
-  if (exactPhrase) {
-    if (tingkat === 'engghi-bhunten' && exactPhrase.tingkatan.engghiBhunten) {
-      return exactPhrase.tingkatan.engghiBhunten;
+  // Helper untuk mendapatkan kata Madura sesuai tingkatan tutur
+  const getWordForLevel = (entry: EntriKamus): string => {
+    let word = entry.tingkatan.enjaIya;
+    if (tingkat === 'engghi-bhunten' && entry.tingkatan.engghiBhunten) {
+      word = entry.tingkatan.engghiBhunten;
+    } else if (tingkat === 'engghi-enten' && entry.tingkatan.engghiEnten) {
+      word = entry.tingkatan.engghiEnten;
     }
-    if (tingkat === 'engghi-enten' && exactPhrase.tingkatan.engghiEnten) {
-      return exactPhrase.tingkatan.engghiEnten;
+    return word.includes('/') ? word.split('/')[0].trim() : word;
+  };
+
+  // 1. Tangani frasa multi-kata terlebih dahulu (misal: "terima kasih", "tidak ada", "kepala desa")
+  const multiWordEntries: { phrase: string; entry: EntriKamus }[] = [];
+  for (const entry of KOSAKATA_MADURA) {
+    for (const arti of entry.artiIndonesia) {
+      if (arti.includes(' ')) {
+        multiWordEntries.push({ phrase: arti, entry });
+      }
     }
-    return exactPhrase.tingkatan.enjaIya;
+  }
+  // Urutkan dari frasa terpanjang agar "terima kasih banyak" didahulukan sebelum "terima kasih"
+  multiWordEntries.sort((a, b) => b.phrase.length - a.phrase.length);
+
+  for (const { phrase, entry } of multiWordEntries) {
+    const escaped = phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(`\\b${escaped}\\b`, 'gi');
+    if (regex.test(text)) {
+      text = text.replace(regex, getWordForLevel(entry));
+    }
   }
 
-  // 2. Jika kalimat, terjemahkan kata-per-kata
-  const words = clean.split(/\s+/);
+  // 2. Terjemahkan kata-per-kata untuk kata tunggal
+  const words = text.split(/\s+/);
   const hasil = words.map(word => {
-    // Bersihkan tanda baca sederhana di ujung kata
-    const cleanWord = word.replace(/[^a-zA-Z0-9']/g, '');
+    const cleanWord = word.toLowerCase().replace(/[^a-zA-Z0-9']/g, '');
     const punctuation = word.replace(/[a-zA-Z0-9']/g, '');
 
-    const match = KOSAKATA_MADURA.find(k =>
+    // Cek kecocokan langsung
+    let match = KOSAKATA_MADURA.find(k =>
       k.artiIndonesia.some(arti => arti.toLowerCase() === cleanWord)
     );
 
-    if (match) {
-      let maduraWord = match.tingkatan.enjaIya;
-      if (tingkat === 'engghi-bhunten' && match.tingkatan.engghiBhunten) {
-        maduraWord = match.tingkatan.engghiBhunten;
-      } else if (tingkat === 'engghi-enten' && match.tingkatan.engghiEnten) {
-        maduraWord = match.tingkatan.engghiEnten;
+    // Jika tidak cocok langsung, coba hilangkan klitika Indonesia (-ku, -mu, -nya)
+    if (!match && cleanWord.length > 4) {
+      for (const suffix of ['ku', 'mu', 'nya']) {
+        if (cleanWord.endsWith(suffix)) {
+          const stem = cleanWord.slice(0, -suffix.length);
+          const stemMatch = KOSAKATA_MADURA.find(k =>
+            k.artiIndonesia.some(arti => arti.toLowerCase() === stem)
+          );
+          if (stemMatch) {
+            match = stemMatch;
+            break;
+          }
+        }
       }
-      return maduraWord + punctuation;
     }
 
-    return word; // Pertahankan kata aslinya jika belum ada di kamus
+    if (match) {
+      return getWordForLevel(match) + punctuation;
+    }
+
+    return word;
   });
 
   return hasil.join(' ');
